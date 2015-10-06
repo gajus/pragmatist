@@ -1,0 +1,31 @@
+{
+  "name": "pragmatist",
+  "description": "",
+  "main": "./dist/gulpfile",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gajus/pragmatist"
+  },
+  "keywords": [],
+  "scripts": {
+    "build": "node ./node_modules/.bin/babel ./src --out-dir ./dist"
+  },
+  "version": "1.0.0",
+  "author": {
+    "name": "Gajus Kuizinas",
+    "email": "gk@anuary.com",
+    "url": "http://gajus.com"
+  },
+  "license": "BSD-3-Clause",
+  "dependencies": {
+    "babel": "^5.8.23",
+    "del": "^2.0.2",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "merge-stream": "^1.0.0"
+  },
+  "devDependencies": {
+    "gulp-babel-istanbul": "^0.10.0"
+  }
+}
