@@ -9,7 +9,7 @@ import merge from 'merge-stream';
  * @param {Object} gulp
  */
 export default (gulp) => {
-    gulp.task('test', (done) => {
+    gulp.task('pragmatist:test', (done) => {
         merge(
             gulp
                 .src('./src/**/*.js')
@@ -28,17 +28,17 @@ export default (gulp) => {
             });
     });
 
-    gulp.task('clean', () => {
+    gulp.task('pragmatist:clean', () => {
         return del('./dist');    
     });
 
-    gulp.task('copy', ['clean'], () => {
+    gulp.task('pragmatist:copy', ['pragmatist:clean'], () => {
         return gulp
             .src('./src/**/*')
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('build', ['copy'], () => {
+    gulp.task('pragmatist:build', ['pragmatist:copy'], () => {
         return gulp
             .src('./src/**/*.js')
             .pipe(sourcemaps.init())
@@ -47,5 +47,11 @@ export default (gulp) => {
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('default', ['build']);
+    gulp.task('pragmatist:watch', () => {
+        gulp.watch(['./src/**/*', './tests/**/*'], ['default']);
+        // How to join multiple watch tasks?
+        // gulp.watch(['./**/*.scss'], ['scss']);
+    });
+
+    gulp.task('pragmatist:default', ['pragmatist:build']);
 };
