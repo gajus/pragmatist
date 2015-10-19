@@ -18,7 +18,7 @@
   "scripts": {
     "build": "node ./node_modules/.bin/babel ./src --out-dir ./dist"
   },
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gk@anuary.com",
