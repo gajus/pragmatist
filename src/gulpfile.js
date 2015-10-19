@@ -55,7 +55,7 @@ export default (gulp) => {
             .pipe(babel({
                 stage: 0,
                 plugins: [
-                    'lodash'
+                    require.resolve('babel-plugin-lodash')
                 ]
             }))
             .pipe(sourcemaps.write('.'))

@@ -73,7 +73,7 @@ exports['default'] = function (gulp) {
     gulp.task('pragmatist:build', ['pragmatist:copy'], function () {
         return gulp.src('./src/**/*.js').pipe(_gulpSourcemaps2['default'].init()).pipe((0, _gulpBabel2['default'])({
             stage: 0,
-            plugins: ['lodash']
+            plugins: [require.resolve('babel-plugin-lodash')]
         })).pipe(_gulpSourcemaps2['default'].write('.')).pipe(gulp.dest('./dist'));
     });
 
