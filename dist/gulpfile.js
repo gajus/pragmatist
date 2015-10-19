@@ -72,12 +72,15 @@ exports['default'] = function (gulp) {
 
     gulp.task('pragmatist:build', ['pragmatist:copy'], function () {
         return gulp.src('./src/**/*.js').pipe(_gulpSourcemaps2['default'].init()).pipe((0, _gulpBabel2['default'])({
+            stage: 0,
             plugins: ['lodash']
         })).pipe(_gulpSourcemaps2['default'].write('.')).pipe(gulp.dest('./dist'));
     });
 
     gulp.task('pragmatist:test', ['pragmatist:build'], function (done) {
-        (0, _mergeStream2['default'])(gulp.src('./src/**/*.js').pipe((0, _gulpBabelIstanbul2['default'])()), gulp.src('./tests/**/*.js').pipe((0, _gulpBabel2['default'])())).pipe(_gulpBabelIstanbul2['default'].hookRequire()).on('finish', function () {
+        (0, _mergeStream2['default'])(gulp.src('./src/**/*.js').pipe((0, _gulpBabelIstanbul2['default'])({
+            babelStage: 0
+        })), gulp.src('./tests/**/*.js').pipe((0, _gulpBabel2['default'])())).pipe(_gulpBabelIstanbul2['default'].hookRequire()).on('finish', function () {
             gulp.src('./tests/**/*.js').pipe((0, _gulpMocha2['default'])()).on('error', function (error) {
                 console.error('error', error);
 
@@ -104,4 +107,3 @@ exports['default'] = function (gulp) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=gulpfile.js.map

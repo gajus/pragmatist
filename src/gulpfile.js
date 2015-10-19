@@ -66,7 +66,9 @@ export default (gulp) => {
         merge(
             gulp
                 .src('./src/**/*.js')
-                .pipe(istanbul()),
+                .pipe(istanbul({
+                    babelStage: 0
+                })),
             gulp
                 .src('./tests/**/*.js')
                 .pipe(babel())

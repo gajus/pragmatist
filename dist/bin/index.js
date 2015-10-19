@@ -36,4 +36,3 @@ if (taskNames.indexOf(executeTaskName) === -1) {
 }
 
 _gulp2['default'].start(executeTaskName);
-//# sourceMappingURL=index.js.map
