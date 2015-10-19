@@ -53,6 +53,7 @@ export default (gulp) => {
             .src('./src/**/*.js')
             .pipe(sourcemaps.init())
             .pipe(babel({
+                stage: 0,
                 plugins: [
                     'lodash'
                 ]
