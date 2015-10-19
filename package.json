@@ -33,12 +33,10 @@
     "globby": "^3.0.1",
     "gulp": "^3.9.0",
     "gulp-babel": "^5.2.1",
+    "gulp-babel-istanbul": "^0.10.1",
     "gulp-mocha": "^2.1.3",
     "gulp-sourcemaps": "^1.6.0",
     "merge-stream": "^1.0.0",
     "yargs": "^3.27.0"
-  },
-  "devDependencies": {
-    "gulp-babel-istanbul": "^0.10.0"
   }
 }
