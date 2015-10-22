@@ -13,9 +13,10 @@ import canonical, {
 
 /**
  * @param {Object} gulp
+ * @param {string} prefix Used to prefix all pragmatist tasks.
  * @returns {undefined}
  */
-export default (gulp) => {
+export default (gulp, prefix = 'pragmatist:') => {
     let watching;
 
     watching = false;
@@ -38,17 +39,17 @@ export default (gulp) => {
             });
     });
 
-    gulp.task('pragmatist:clean', ['pragmatist:lint'], () => {
+    gulp.task(prefix + 'clean', () => {
         return del('./dist');
     });
 
-    gulp.task('pragmatist:copy', ['pragmatist:clean'], () => {
+    gulp.task(prefix + 'copy', [prefix + 'clean'], () => {
         return gulp
             .src('./src/**/*')
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('pragmatist:build', ['pragmatist:copy'], () => {
+    gulp.task(prefix + 'build', [prefix + 'copy'], () => {
         return gulp
             .src('./src/**/*.js')
             .pipe(sourcemaps.init())
@@ -62,7 +63,7 @@ export default (gulp) => {
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('pragmatist:test', ['pragmatist:build'], (done) => {
+    gulp.task(prefix + 'test', (done) => {
         merge(
             gulp
                 .src('./src/**/*.js')
@@ -94,13 +95,15 @@ export default (gulp) => {
             });
     });
 
-    gulp.task('pragmatist:watch', () => {
+    gulp.task(prefix + 'watch-lint', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], ['pragmatist:default']);
-        // How to join multiple watch tasks?
-        // gulp.watch(['./**/*.scss'], ['scss']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint']);
     });
 
-    gulp.task('pragmatist:default', ['pragmatist:test']);
+    gulp.task(prefix + 'watch-test', () => {
+        watching = true;
+
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'test']);
+    });
 };

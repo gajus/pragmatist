@@ -1,7 +1,7 @@
 {
   "name": "pragmatist",
-  "description": "",
-  "main": "./dist/gulpfile",
+  "description": "A collection of tasks to standardise builds.",
+  "main": "./dist",
   "bin": "./dist/bin",
   "repository": {
     "type": "git",
@@ -16,7 +16,7 @@
     "scss"
   ],
   "scripts": {
-    "build": "node ./node_modules/.bin/babel ./src --out-dir ./dist"
+    "build": "rm -fr ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist"
   },
   "version": "1.1.2",
   "author": {
@@ -28,6 +28,7 @@
   "dependencies": {
     "babel": "^5.8.23",
     "babel-plugin-lodash": "^0.2.0",
+    "bluebird": "^2.10.2",
     "canonical": "^1.0.4",
     "del": "^2.0.2",
     "globby": "^3.0.1",

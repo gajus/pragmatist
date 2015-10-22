@@ -1,30 +1,40 @@
+import P from 'bluebird';
 import gulp from 'gulp';
-import gulpfile from './../gulpfile';
+import pragmatist from './..';
 import {
     argv
 } from 'yargs';
 
-let taskNames,
-    executeTaskNames,
-    executeTaskName;
+let knownTaskNames,
+    executeTaskNames;
 
-gulpfile(gulp);
+pragmatist(gulp);
 
-taskNames = Object.keys(gulp.tasks);
+knownTaskNames = Object.keys(gulp.tasks);
 executeTaskNames = argv._;
 
 if (executeTaskNames.length === 0) {
-    executeTaskNames.push('default');
+    executeTaskNames.push('test');
 }
 
-if (executeTaskNames.length > 1) {
-    throw new Error('Cannot execute more than one task at once.');
-}
+P
+    .resolve(executeTaskNames)
+    .map((taskName) => {
+        let executeTaskName;
 
-executeTaskName = 'pragmatist:' + executeTaskNames[0];
+        executeTaskName = 'pragmatist:' + taskName;
 
-if (taskNames.indexOf(executeTaskName) === -1) {
-    throw new Error('"pragmatist:' + executeTaskName + '" task does not exist.');
-}
+        if (knownTaskNames.indexOf(executeTaskName) === -1) {
+            throw new Error('"pragmatist:' + executeTaskName + '" task does not exist.');
+        }
 
-gulp.start(executeTaskName);
+        return new P((resolve) => {
+            gulp
+                .start(executeTaskName)
+                .on('task_stop', () => {
+                    resolve();
+                });
+        });
+    }, {
+        concurrency: 1
+    });

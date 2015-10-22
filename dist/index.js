@@ -40,10 +40,13 @@ var _canonical2 = _interopRequireDefault(_canonical);
 
 /**
  * @param {Object} gulp
+ * @param {string} prefix Used to prefix all pragmatist tasks.
  * @returns {undefined}
  */
 
 exports['default'] = function (gulp) {
+    var prefix = arguments.length <= 1 || arguments[1] === undefined ? 'pragmatist:' : arguments[1];
+
     var watching = undefined;
 
     watching = false;
@@ -62,22 +65,22 @@ exports['default'] = function (gulp) {
         });
     });
 
-    gulp.task('pragmatist:clean', ['pragmatist:lint'], function () {
+    gulp.task(prefix + 'clean', function () {
         return (0, _del2['default'])('./dist');
     });
 
-    gulp.task('pragmatist:copy', ['pragmatist:clean'], function () {
+    gulp.task(prefix + 'copy', [prefix + 'clean'], function () {
         return gulp.src('./src/**/*').pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('pragmatist:build', ['pragmatist:copy'], function () {
+    gulp.task(prefix + 'build', [prefix + 'copy'], function () {
         return gulp.src('./src/**/*.js').pipe(_gulpSourcemaps2['default'].init()).pipe((0, _gulpBabel2['default'])({
             stage: 0,
             plugins: [require.resolve('babel-plugin-lodash')]
         })).pipe(_gulpSourcemaps2['default'].write('.')).pipe(gulp.dest('./dist'));
     });
 
-    gulp.task('pragmatist:test', ['pragmatist:build'], function (done) {
+    gulp.task(prefix + 'test', function (done) {
         (0, _mergeStream2['default'])(gulp.src('./src/**/*.js').pipe((0, _gulpBabelIstanbul2['default'])({
             babelStage: 0
         })), gulp.src('./tests/**/*.js').pipe((0, _gulpBabel2['default'])())).pipe(_gulpBabelIstanbul2['default'].hookRequire()).on('finish', function () {
@@ -95,15 +98,18 @@ exports['default'] = function (gulp) {
         });
     });
 
-    gulp.task('pragmatist:watch', function () {
+    gulp.task(prefix + 'watch-lint', function () {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], ['pragmatist:default']);
-        // How to join multiple watch tasks?
-        // gulp.watch(['./**/*.scss'], ['scss']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint']);
     });
 
-    gulp.task('pragmatist:default', ['pragmatist:test']);
+    gulp.task(prefix + 'watch-test', function () {
+        watching = true;
+
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'test']);
+    });
 };
 
 module.exports = exports['default'];
+//# sourceMappingURL=index.js.map
