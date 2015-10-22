@@ -6,11 +6,11 @@ A collection of tasks to standardise builds.
 
 Tasks that are not documented (including dependencies of the documented tasks that are not documented) are considered private and can be changed/renamed or removed without a warning.
 
-### `lint`
+#### `lint`
 
 * Uses [Canonical](https://github.com/gajus/canonical) to lint all `*.js` files in `./src` and `./dist` directories.
 
-### `build`
+#### `build`
 
 * Copies all files from `./src` directory to `./dist`.
 * Uses [Babel](https://babeljs.io/) to compile files in `./src` directory.
@@ -19,7 +19,7 @@ Tasks that are not documented (including dependencies of the documented tasks th
     * Uses [`babel-plugin-lodash`](https://github.com/megawac/babel-plugin-lodash).
     * Babel compiler is configured to use [stage 0](https://babeljs.io/docs/usage/options/) ES features.
 
-### `test`
+#### `test`
 
 * Uses [Babel](https://babeljs.io/) to compile files in `./tests` directory.
 * Uses [Istanbul](https://github.com/gotwarlost/istanbul) to generate test coverage.
@@ -29,11 +29,11 @@ Istanbul assumes that tests are using `./src` files (as opposed to `./dist`).
 
 Istanbul coverage report is written to the `./coverage` directory. A coverage summary is included in the CLI output.
 
-### `watch-test`
+#### `watch-test`
 
 Runs `test` task every time `./src/**/*.js` or `./tests/**/*.js` changes.
 
-### `watch-lint`
+#### `watch-lint`
 
 Runs `lint` task every time `./src/**/*.js` or `./tests/**/*.js` changes.
 
