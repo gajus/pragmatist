@@ -45,4 +45,3 @@ _bluebird2['default'].resolve(executeTaskNames).map(function (taskName) {
 }, {
     concurrency: 1
 });
-//# sourceMappingURL=index.js.map

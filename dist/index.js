@@ -112,4 +112,3 @@ exports['default'] = function (gulp) {
 };
 
 module.exports = exports['default'];
-//# sourceMappingURL=index.js.map
