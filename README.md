@@ -98,4 +98,8 @@ Add to `.npmignore`
 ```
 src
 tests
+coverage
+.travis.yml
+.eslintrc
+*.log
 ```
