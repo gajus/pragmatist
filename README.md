@@ -88,6 +88,7 @@ This is just a reminder. Pragmatist will produce several files that you do not w
 Add to `.gitignore`:
 
 ```
+node_modules
 coverage
 *.log
 ```
