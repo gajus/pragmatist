@@ -81,6 +81,19 @@ Multiple tasks can be executed one after the other, e.g.
 pragmatist <task #1> <task #2> <task #3>
 ```
 
+## NPM
+
+A typical project using `pragmatist` will define the following NPM scripts:
+
+```json
+"scripts": {
+    "pragmatist": "node ./node_modules/.bin/pragmatist",
+    "build": "npm run pragmatist build",
+    "lint": "npm run pragmatist lint",
+    "test": "npm run pragmatist test"
+},
+```
+
 ## Ignore Unnecessary Files
 
 This is just a reminder. Pragmatist will produce several files that you do not want to commit to the repository or include in the npm bundle.
@@ -88,6 +101,7 @@ This is just a reminder. Pragmatist will produce several files that you do not w
 Add to `.gitignore`:
 
 ```
+node_modules
 coverage
 *.log
 ```
@@ -97,4 +111,8 @@ Add to `.npmignore`
 ```
 src
 tests
+coverage
+.travis.yml
+.eslintrc
+*.log
 ```
