@@ -28,8 +28,8 @@
   "dependencies": {
     "babel": "^5.8.29",
     "babel-plugin-lodash": "^0.2.0",
-    "bluebird": "^2.10.2",
-    "canonical": "^2.0.2",
+    "bluebird": "^3.0.0",
+    "canonical": "^2.1.0",
     "del": "^2.0.2",
     "globby": "^3.0.1",
     "gulp": "^3.9.0",
