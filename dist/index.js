@@ -52,7 +52,7 @@ exports['default'] = function (gulp) {
     watching = false;
 
     gulp.task('pragmatist:lint', function () {
-        return (0, _globby2['default'])(['./src/**/*.js', './tests/**/*.js']).then(function (paths) {
+        return (0, _globby2['default'])(['./src/**/*.js', './tests/**/*.js', './src/**/*.css', './src/**/*.scss']).then(function (paths) {
             var formatter = undefined,
                 report = undefined;
 

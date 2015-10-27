@@ -24,7 +24,9 @@ export default (gulp, prefix = 'pragmatist:') => {
     gulp.task('pragmatist:lint', () => {
         return glob([
                 './src/**/*.js',
-                './tests/**/*.js'
+                './tests/**/*.js',
+                './src/**/*.css',
+                './src/**/*.scss'
             ])
             .then((paths) => {
                 let formatter,
