@@ -8,7 +8,7 @@ Tasks that are not documented (including dependencies of the documented tasks th
 
 #### `lint`
 
-* Uses [Canonical](https://github.com/gajus/canonical) to lint all `*.js` files in `./src` and `./dist` directories.
+* Uses [Canonical](https://github.com/gajus/canonical) to lint all `*.css`, `*.scss` and `*.js` files in `./src` and `./dist` directories.
 
 #### `build`
 
