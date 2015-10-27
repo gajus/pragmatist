@@ -107,6 +107,7 @@ Add to `.gitignore`:
 ```
 node_modules
 coverage
+.coveralls.yml
 *.log
 ```
 
@@ -116,6 +117,7 @@ Add to `.npmignore`
 src
 tests
 coverage
+.coveralls.yml
 .travis.yml
 .eslintrc
 *.log
