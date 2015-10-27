@@ -29,6 +29,10 @@ Istanbul assumes that tests are using `./src` files (as opposed to `./dist`).
 
 Istanbul coverage report is written to the `./coverage` directory. A coverage summary is included in the CLI output.
 
+#### `watch`
+
+Runs `lint`, `test` tasks every time `./src/**/*.js` or `./tests/**/*.js` changes.
+
 #### `watch-test`
 
 Runs `test` task every time `./src/**/*.js` or `./tests/**/*.js` changes.

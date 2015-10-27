@@ -95,6 +95,12 @@ export default (gulp, prefix = 'pragmatist:') => {
             });
     });
 
+    gulp.task(prefix + 'watch', () => {
+        watching = true;
+
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint', prefix + 'test']);
+    });
+
     gulp.task(prefix + 'watch-lint', () => {
         watching = true;
 

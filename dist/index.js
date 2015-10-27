@@ -98,6 +98,12 @@ exports['default'] = function (gulp) {
         });
     });
 
+    gulp.task(prefix + 'watch', function () {
+        watching = true;
+
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint', prefix + 'test']);
+    });
+
     gulp.task(prefix + 'watch-lint', function () {
         watching = true;
 
