@@ -100,7 +100,7 @@ export default (gulp, prefix = 'pragmatist:') => {
     gulp.task(prefix + 'watch', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint', prefix + 'test']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint', prefix + 'test', prefix + 'build']);
     });
 
     gulp.task(prefix + 'watch-lint', () => {

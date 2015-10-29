@@ -31,7 +31,7 @@ Istanbul coverage report is written to the `./coverage` directory. A coverage su
 
 #### `watch`
 
-Runs `lint`, `test` tasks every time `./src/**/*.js` or `./tests/**/*.js` changes.
+Runs `lint`, `test` and `build` tasks every time `./src/**/*.js` or `./tests/**/*.js` changes.
 
 #### `watch-test`
 
