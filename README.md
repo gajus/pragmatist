@@ -109,6 +109,7 @@ Add to `.gitignore`:
 ```
 node_modules
 coverage
+dist
 .coveralls.yml
 *.log
 ```
