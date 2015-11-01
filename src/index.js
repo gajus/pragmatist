@@ -80,8 +80,10 @@ export default (gulp, prefix = 'pragmatist:') => {
                 gulp
                     .src('./tests/**/*.js')
                     .pipe(mocha())
-                    .on('error', function (error) {
-                        console.error('error', error);
+                    .on('error', (error) => {
+                        if (error) {
+                            console.error('error', error);
+                        }
 
                         if (!watching) {
                             return;

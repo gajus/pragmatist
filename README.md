@@ -1,6 +1,6 @@
 # Pragmatist
 
-A collection of tasks to standardise builds.
+A collection of tasks to standardize builds.
 
 ## Tasks
 
