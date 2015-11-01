@@ -111,6 +111,7 @@ node_modules
 coverage
 dist
 .coveralls.yml
+.DS_Store
 *.log
 ```
 
@@ -121,6 +122,7 @@ src
 tests
 coverage
 .coveralls.yml
+.DS_Store
 .travis.yml
 .eslintrc
 *.log
