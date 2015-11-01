@@ -37,7 +37,6 @@
     "gulp-babel-istanbul": "^0.10.1",
     "gulp-mocha": "^2.1.3",
     "gulp-sourcemaps": "^1.6.0",
-    "merge-stream": "^1.0.0",
     "yargs": "^3.29.0"
   }
 }

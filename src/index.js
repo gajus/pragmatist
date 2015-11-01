@@ -3,7 +3,6 @@ import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
 import mocha from 'gulp-mocha';
 import istanbul from 'gulp-babel-istanbul';
-import merge from 'merge-stream';
 import glob from 'globby';
 
 import canonical, {
