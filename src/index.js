@@ -2,13 +2,26 @@ import del from 'del';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
 import mocha from 'gulp-mocha';
-import istanbul from 'gulp-babel-istanbul';
 import glob from 'globby';
+import istanbul from 'gulp-istanbul';
 
 import canonical, {
     lintFiles,
     getFormatter
 } from 'canonical';
+
+let babelConfig;
+
+babelConfig = {
+    presets: [
+        require.resolve('babel-preset-es2015'),
+        require.resolve('babel-preset-stage-0'),
+        require.resolve('babel-preset-react')
+    ],
+    plugins: [
+        require.resolve('babel-plugin-lodash')
+    ]
+};
 
 /**
  * @param {Object} gulp
@@ -20,7 +33,7 @@ export default (gulp, prefix = 'pragmatist:') => {
 
     watching = false;
 
-    gulp.task('pragmatist:lint', () => {
+    gulp.task(prefix + 'lint', () => {
         return glob([
                 './src/**/*.js',
                 './tests/**/*.js',
@@ -54,49 +67,37 @@ export default (gulp, prefix = 'pragmatist:') => {
         return gulp
             .src('./src/**/*.js')
             .pipe(sourcemaps.init())
-            .pipe(babel({
-                stage: 0,
-                plugins: [
-                    require.resolve('babel-plugin-lodash')
-                ]
-            }))
+            .pipe(babel(babelConfig))
             .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(prefix + 'test', (done) => {
-        merge(
-            gulp
-                .src('./src/**/*.js')
-                .pipe(istanbul({
-                    babelStage: 0
-                })),
-            gulp
-                .src('./tests/**/*.js')
-                .pipe(babel())
-        )
-            .pipe(istanbul.hookRequire())
-            .on('finish', () => {
-                gulp
-                    .src('./tests/**/*.js')
-                    .pipe(mocha())
-                    .on('error', (error) => {
-                        if (error) {
-                            console.error('error', error);
-                        }
-
-                        if (!watching) {
-                            return;
-                        }
-
-                        this.emit('end');
-                    })
-                    .pipe(istanbul.writeReports())
-                    .on('end', () => {
-                        done();
-                    });
-            });
+    gulp.task(prefix + 'test-build', () => {
+        return gulp
+            .src(['./tests/**/*.js', './src/**/*.js'], {
+                base: './'
+            })
+            .pipe(babel(babelConfig))
+            .pipe(gulp.dest('./.test-build'));
     });
+
+    gulp.task(prefix + 'test-hook-require', [prefix + 'test-build'], () => {
+        return gulp.src('./.test-build/src/**/*.js')
+            .pipe(istanbul())
+            .pipe(istanbul.hookRequire());
+    });
+
+    gulp.task(prefix + 'test-run', [prefix + 'test-hook-require'], () => {
+        return gulp.src(['./.test-build/tests/**/*.js'])
+            .pipe(mocha())
+            .pipe(istanbul.writeReports());
+    });
+
+    gulp.task(prefix + 'test-clean', [prefix + 'test-run'], () => {
+        return del('./.test-build');
+    });
+
+    gulp.task(prefix + 'test', [prefix + 'test-clean']);
 
     gulp.task(prefix + 'watch', () => {
         watching = true;
