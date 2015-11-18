@@ -4,6 +4,7 @@ import sourcemaps from 'gulp-sourcemaps';
 import mocha from 'gulp-mocha';
 import glob from 'globby';
 import istanbul from 'gulp-istanbul';
+import plumber from 'gulp-plumber';
 
 import canonical, {
     lintFiles,
@@ -82,13 +83,16 @@ export default (gulp, prefix = 'pragmatist:') => {
     });
 
     gulp.task(prefix + 'test-hook-require', [prefix + 'test-build'], () => {
-        return gulp.src('./.test-build/src/**/*.js')
+        return gulp
+            .src('./.test-build/src/**/*.js')
             .pipe(istanbul())
             .pipe(istanbul.hookRequire());
     });
 
     gulp.task(prefix + 'test-run', [prefix + 'test-hook-require'], () => {
-        return gulp.src(['./.test-build/tests/**/*.js'])
+        return gulp
+            .src(['./.test-build/tests/**/*.js'])
+            .pipe(plumber())
             .pipe(mocha())
             .pipe(istanbul.writeReports());
     });
