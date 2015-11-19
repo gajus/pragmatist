@@ -73,11 +73,16 @@ export default (gulp, prefix = 'pragmatist:') => {
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(prefix + 'test-build', () => {
+    gulp.task(prefix + 'test-copy', () => {
         return gulp
-            .src(['./tests/**/*.js', './src/**/*.js'], {
+            .src(['./tests/**/*', './src/**/*'], {
                 base: './'
-            })
+            }).pipe(gulp.dest('./.test-build'));
+    });
+
+    gulp.task(prefix + 'test-build', [prefix + 'test-copy'], () => {
+        return gulp
+            .src('./.test-build/**/*.js')
             .pipe(babel(babelConfig))
             .pipe(gulp.dest('./.test-build'));
     });
