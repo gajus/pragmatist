@@ -27,13 +27,13 @@
   "license": "BSD-3-Clause",
   "dependencies": {
     "babel": "^6.1.18",
-    "babel-cli": "^6.1.18",
+    "babel-cli": "^6.2.0",
     "babel-plugin-lodash": "^1.0.2",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "bluebird": "^3.0.5",
-    "canonical": "^2.2.4",
+    "canonical": "^2.3.2",
     "del": "^2.1.0",
     "globby": "^4.0.0",
     "gulp": "^3.9.0",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "babel": "^6.1.18",
-    "babel-cli": "^6.1.18",
+    "babel-cli": "^6.2.0",
     "babel-preset-es2015": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18"
   }
