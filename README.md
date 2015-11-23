@@ -121,9 +121,6 @@ Add to `.npmignore`
 src
 tests
 coverage
-.coveralls.yml
-.DS_Store
-.travis.yml
-.eslintrc
+.*
 *.log
 ```
