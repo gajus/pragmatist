@@ -112,9 +112,10 @@ coverage
 dist
 *.log
 .*
-!.babelrc
 !.gitignore
 !.npmignore
+!.babelrc
+!.travis.yml
 ```
 
 Add to `.npmignore`
