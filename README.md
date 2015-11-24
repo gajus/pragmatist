@@ -110,9 +110,12 @@ Add to `.gitignore`:
 node_modules
 coverage
 dist
-.coveralls.yml
-.DS_Store
 *.log
+.*
+!.gitignore
+!.npmignore
+!.babelrc
+!.travis.yml
 ```
 
 Add to `.npmignore`
