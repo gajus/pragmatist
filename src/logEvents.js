@@ -1,6 +1,5 @@
 import gutil from 'gulp-util';
 import chalk from 'chalk';
-import moment from 'moment';
 import prettyHrtime from 'pretty-hrtime';
 
 let formatError;
