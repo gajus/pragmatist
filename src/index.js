@@ -5,6 +5,7 @@ import mocha from 'gulp-mocha';
 import glob from 'globby';
 import istanbul from 'gulp-istanbul';
 import plumber from 'gulp-plumber';
+import logEvents from './logEvents';
 
 import canonical, {
     lintFiles,
@@ -27,10 +28,16 @@ babelConfig = {
 /**
  * @param {Object} gulp
  * @param {string} prefix Used to prefix all pragmatist tasks.
+ * @param {boolean} forceLogging
  * @returns {undefined}
  */
-export default (gulp, prefix = 'pragmatist:') => {
-    let watching;
+export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
+    let createTask,
+        watching;
+
+    if (forceLogging) {
+        logEvents(gulp);
+    }
 
     watching = false;
 

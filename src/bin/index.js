@@ -8,7 +8,7 @@ import {
 let knownTaskNames,
     executeTaskNames;
 
-pragmatist(gulp);
+pragmatist(gulp, 'pragmatist:', true);
 
 knownTaskNames = Object.keys(gulp.tasks);
 executeTaskNames = argv._;
