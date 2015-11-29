@@ -25,6 +25,26 @@
     "url": "http://gajus.com"
   },
   "license": "BSD-3-Clause",
+  "bundledDependencies": [
+    "babel",
+    "babel-cli",
+    "babel-plugin-lodash",
+    "babel-preset-es2015",
+    "babel-preset-react",
+    "babel-preset-stage-0",
+    "canonical",
+    "del",
+    "globby",
+    "gulp",
+    "gulp-babel",
+    "gulp-istanbul",
+    "gulp-mocha",
+    "gulp-plumber",
+    "gulp-sourcemaps",
+    "gulp-util",
+    "pretty-hrtime",
+    "yargs"
+  ],
   "dependencies": {
     "babel": "^6.1.18",
     "babel-cli": "^6.2.0",
