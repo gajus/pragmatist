@@ -34,7 +34,6 @@
     "babel-preset-stage-0",
     "canonical",
     "del",
-    "globby",
     "gulp",
     "gulp-babel",
     "gulp-istanbul",
@@ -42,8 +41,7 @@
     "gulp-plumber",
     "gulp-sourcemaps",
     "gulp-util",
-    "pretty-hrtime",
-    "yargs"
+    "pretty-hrtime"
   ],
   "dependencies": {
     "babel": "^6.1.18",
@@ -53,7 +51,7 @@
     "babel-preset-react": "^6.1.18",
     "babel-preset-stage-0": "^6.1.18",
     "bluebird": "^3.0.5",
-    "canonical": "^2.6.0",
+    "canonical": "^2.6.3",
     "chalk": "^1.1.1",
     "del": "^2.1.0",
     "globby": "^4.0.0",
