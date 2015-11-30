@@ -80,7 +80,11 @@ export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(prefix + 'test-copy', () => {
+    gulp.task(prefix + 'task-pre-copy-clean', () => {
+        return del('./.test-build');
+    });
+
+    gulp.task(prefix + 'test-copy', [prefix + 'task-pre-copy-clean'], () => {
         return gulp
             .src(['./tests/**/*', './src/**/*'], {
                 base: './'
@@ -131,5 +135,11 @@ export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
         watching = true;
 
         gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'test']);
+    });
+
+    gulp.task(prefix + 'watch-build', () => {
+        watching = true;
+
+        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'build']);
     });
 };
