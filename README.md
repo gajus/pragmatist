@@ -100,7 +100,9 @@ A typical project using `pragmatist` will define the following NPM scripts:
     "test": "npm run pragmatist test",
     "build": "npm run pragmatist build",
     "watch": "npm run pragmatist watch",
-    "preversion": "npm run lint && npm run test && npm run build"
+    "watch-lint": "npm run pragmatist watch-lint",
+    "watch-test": "npm run pragmatist watch-test",
+    "watch-build": "npm run pragmatist watch-build"
 },
 ```
 
