@@ -51,7 +51,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "bluebird": "^3.0.6",
-    "canonical": "^2.6.8",
+    "canonical": "^2.6.9",
     "chalk": "^1.1.1",
     "del": "^2.2.0",
     "globby": "^4.0.0",
