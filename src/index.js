@@ -47,6 +47,8 @@ export default (gulp, options = {}) => {
 
     if (config.browser) {
         babelConfig.presets.push(require.resolve('babel-preset-es2015'));
+        // https://phabricator.babeljs.io/T6719#68505
+        babelConfig.plugins.push(require.resolve('babel-plugin-transform-class-properties'));
     }
 
     if (config.forceLogging) {
