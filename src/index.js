@@ -46,11 +46,12 @@ export default (gulp, options = {}) => {
     };
 
     if (config.browser) {
-        babelConfig.presets.push(require.resolve('babel-preset-es2015'));
+        babelConfig.presets.unshift(require.resolve('babel-preset-es2015'));
         // https://phabricator.babeljs.io/T6719#68505
-        babelConfig.plugins.push(require.resolve('babel-plugin-transform-class-properties'));
+        // babelConfig.plugins.unshift(require.resolve('babel-plugin-transform-class-properties'));
     } else {
         babelConfig.plugins.push(require.resolve('babel-plugin-transform-es2015-modules-commonjs'));
+        babelConfig.plugins.push(require.resolve('babel-plugin-transform-es2015-parameters'));
     }
 
     if (config.forceLogging) {
