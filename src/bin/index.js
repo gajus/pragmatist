@@ -1,21 +1,31 @@
+import _ from 'lodash';
 import P from 'bluebird';
 import gulp from 'gulp';
+import yargs from 'yargs';
 import pragmatist from './..';
-import {
-    argv
-} from 'yargs';
 
-let knownTaskNames,
-    executeTaskNames;
+let argv,
+    executeTaskNames,
+    knownTaskNames;
 
-pragmatist(gulp, 'pragmatist:', true);
+argv = yargs
+    .demand(1)
+    .options({
+        browser: {
+            description: 'Uses es2015 Babel preset for the build.',
+            type: 'boolean'
+        }
+    })
+    .argv;
 
-knownTaskNames = Object.keys(gulp.tasks);
+pragmatist(gulp, {
+    prefix: 'pragmatist:',
+    forceLogging: true,
+    browser: argv.browser
+});
+
+knownTaskNames = _.keys(gulp.tasks);
 executeTaskNames = argv._;
-
-if (executeTaskNames.length === 0) {
-    executeTaskNames.push('test');
-}
 
 P
     .resolve(executeTaskNames)
@@ -24,7 +34,7 @@ P
 
         executeTaskName = 'pragmatist:' + taskName;
 
-        if (knownTaskNames.indexOf(executeTaskName) === -1) {
+        if (_.indexOf(knownTaskNames, executeTaskName) === -1) {
             throw new Error('"pragmatist:' + executeTaskName + '" task does not exist.');
         }
 

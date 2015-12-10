@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import gutil from 'gulp-util';
 import chalk from 'chalk';
 import prettyHrtime from 'pretty-hrtime';
@@ -5,61 +7,56 @@ import prettyHrtime from 'pretty-hrtime';
 let formatError;
 
 // Format orchestrator errors
-formatError = (e) => {
-    if (!e.err) {
-        return e.message;
+formatError = (event) => {
+    if (!event.err) {
+        return event.message;
     }
 
     // PluginError
-    if (typeof e.err.showStack === 'boolean') {
-        return e.err.toString();
+    if (typeof event.err.showStack === 'boolean') {
+        return event.err.toString();
     }
 
     // Normal error
-    if (e.err.stack) {
-        return e.err.stack;
+    if (event.err.stack) {
+        return event.err.stack;
     }
 
     // Unknown (string, number, etc.)
-    return new Error(String(e.err)).stack;
+    return new Error(String(event.err)).stack;
 }
 
 /**
  * @see https://github.com/gulpjs/gulp/blob/a54996c6a98acc000ebb310f89d7ca4bbacb9371/bin/gulp.js
  */
 export default (gulpInst) => {
-    // Total hack due to poor error management in orchestrator
-    gulpInst.on('err', () => {
-        failed = true;
-    });
-
-    gulpInst.on('task_start', (e) => {
+    gulpInst.on('task_start', (event) => {
         // TODO: batch these
         // so when 5 tasks start at once it only logs one time with all 5
-        gutil.log('Starting', '\'' + chalk.cyan(e.task) + '\'...');
+        gutil.log('Starting', '\'' + chalk.cyan(event.task) + '\'...');
     });
 
-    gulpInst.on('task_stop', (e) => {
+    gulpInst.on('task_stop', (event) => {
         let time;
 
-        time = prettyHrtime(e.hrDuration);
+        time = prettyHrtime(event.hrDuration);
 
-        gutil.log('Finished', '\'' + chalk.cyan(e.task) + '\'', 'after', chalk.magenta(time));
+        gutil.log('Finished', '\'' + chalk.cyan(event.task) + '\'', 'after', chalk.magenta(time));
     });
 
-    gulpInst.on('task_err', (e) => {
-        let msg,
+    gulpInst.on('task_err', (event) => {
+        let message,
             time;
 
-        msg = formatError(e);
-        time = prettyHrtime(e.hrDuration);
+        message = formatError(event);
+        time = prettyHrtime(event.hrDuration);
 
         gutil.log(
-            '\'' + chalk.cyan(e.task) + '\'',
+            '\'' + chalk.cyan(event.task) + '\'',
             chalk.red('errored after'),
             chalk.magenta(time)
         );
 
-        gutil.log(msg);
+        gutil.log(message);
     });
-}
+};

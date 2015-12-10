@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import del from 'del';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
@@ -5,73 +6,94 @@ import mocha from 'gulp-mocha';
 import glob from 'globby';
 import istanbul from 'gulp-istanbul';
 import plumber from 'gulp-plumber';
-import logEvents from './logEvents';
-
-import canonical, {
+import chalk from 'chalk';
+import {
     lintFiles,
     getFormatter
 } from 'canonical';
 
-let babelConfig;
+import logEvents from './logEvents';
 
-babelConfig = {
-    presets: [
-        require.resolve('babel-preset-es2015'),
-        require.resolve('babel-preset-stage-0'),
-        require.resolve('babel-preset-react')
-    ],
-    plugins: [
-        require.resolve('babel-plugin-lodash')
-    ]
-};
+/**
+ * @typedef {Object} options
+ * @property {string} prefix Used to prefix all pragmatist tasks.
+ * @property {boolean} forceLogging Forces gulp logs for task start time and completion time.
+ */
 
 /**
  * @param {Object} gulp
- * @param {string} prefix Used to prefix all pragmatist tasks.
- * @param {boolean} forceLogging
+ * @param {options} options
  * @returns {undefined}
  */
-export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
-    let createTask,
+export default (gulp, options = {}) => {
+    let babelConfig,
+        config,
         watching;
 
-    if (forceLogging) {
+    config = _.assign({}, {
+        prefix: 'pragmatist:',
+        forceLogging: false
+    }, options);
+
+    babelConfig = {
+        presets: [
+            require.resolve('babel-preset-stage-0'),
+            require.resolve('babel-preset-react')
+        ],
+        plugins: [
+            require.resolve('babel-plugin-lodash')
+        ]
+    };
+
+    if (config.browser) {
+        babelConfig.presets.push(require.resolve('babel-preset-es2015'));
+    }
+
+    if (config.forceLogging) {
         logEvents(gulp);
     }
 
     watching = false;
 
-    gulp.task(prefix + 'lint', () => {
+    gulp.task(config.prefix + 'lint', () => {
         return glob([
-                './src/**/*.js',
-                './tests/**/*.js',
-                './src/**/*.css',
-                './src/**/*.scss'
-            ])
-            .then((paths) => {
-                let formatter,
-                    report;
+            './src/**/*.js',
+            './tests/**/*.js',
+            './src/**/*.css',
+            './src/**/*.scss'
+        ])
+        .then((paths) => {
+            let formatter,
+                report;
 
-                formatter = getFormatter();
-                report = lintFiles(paths);
+            formatter = getFormatter();
+            report = lintFiles(paths);
 
-                if (report.errorCount || report.warningCount) {
-                    console.log(formatter(report));
-                }
-            });
+            if (report.errorCount || report.warningCount) {
+                /* eslint-disable no-console */
+                console.log(formatter(report));
+                /* eslint-enable no-console */
+            }
+        });
     });
 
-    gulp.task(prefix + 'clean', () => {
+    gulp.task(config.prefix + 'clean', () => {
         return del('./dist');
     });
 
-    gulp.task(prefix + 'copy', [prefix + 'clean'], () => {
+    gulp.task(config.prefix + 'copy', [config.prefix + 'clean'], () => {
         return gulp
             .src('./src/**/*')
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(prefix + 'build', [prefix + 'copy'], () => {
+    gulp.task(config.prefix + 'build', [config.prefix + 'copy'], () => {
+        if (!config.browser) {
+            /* eslint-disable no-console */
+            console.log('Making browser ' + chalk.red('incompatible build') + '. Build is configured to compile node v5+ ready code. ES2015 Babel preset can be added using "browser" option.');
+            /* eslint-enable no-console */
+        }
+
         return gulp
             .src('./src/**/*.js')
             .pipe(sourcemaps.init())
@@ -80,32 +102,32 @@ export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(prefix + 'task-pre-copy-clean', () => {
+    gulp.task(config.prefix + 'task-pre-copy-clean', () => {
         return del('./.test-build');
     });
 
-    gulp.task(prefix + 'test-copy', [prefix + 'task-pre-copy-clean'], () => {
+    gulp.task(config.prefix + 'test-copy', [config.prefix + 'task-pre-copy-clean'], () => {
         return gulp
             .src(['./tests/**/*', './src/**/*'], {
                 base: './'
             }).pipe(gulp.dest('./.test-build'));
     });
 
-    gulp.task(prefix + 'test-build', [prefix + 'test-copy'], () => {
+    gulp.task(config.prefix + 'test-build', [config.prefix + 'test-copy'], () => {
         return gulp
             .src('./.test-build/**/*.js')
             .pipe(babel(babelConfig))
             .pipe(gulp.dest('./.test-build'));
     });
 
-    gulp.task(prefix + 'test-hook-require', [prefix + 'test-build'], () => {
+    gulp.task(config.prefix + 'test-hook-require', [config.prefix + 'test-build'], () => {
         return gulp
             .src('./.test-build/src/**/*.js')
             .pipe(istanbul())
             .pipe(istanbul.hookRequire());
     });
 
-    gulp.task(prefix + 'test-run', [prefix + 'test-hook-require'], () => {
+    gulp.task(config.prefix + 'test-run', [config.prefix + 'test-hook-require'], () => {
         return gulp
             .src(['./.test-build/tests/**/*.js'])
             .pipe(plumber())
@@ -113,33 +135,33 @@ export default (gulp, prefix = 'pragmatist:', forceLogging = false) => {
             .pipe(istanbul.writeReports());
     });
 
-    gulp.task(prefix + 'test-clean', [prefix + 'test-run'], () => {
+    gulp.task(config.prefix + 'test-clean', [config.prefix + 'test-run'], () => {
         return del('./.test-build');
     });
 
-    gulp.task(prefix + 'test', [prefix + 'test-clean']);
+    gulp.task(config.prefix + 'test', [config.prefix + 'test-clean']);
 
-    gulp.task(prefix + 'watch', () => {
+    gulp.task(config.prefix + 'watch', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint', prefix + 'test', prefix + 'build']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
     });
 
-    gulp.task(prefix + 'watch-lint', () => {
+    gulp.task(config.prefix + 'watch-lint', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'lint']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'lint']);
     });
 
-    gulp.task(prefix + 'watch-test', () => {
+    gulp.task(config.prefix + 'watch-test', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'test']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'test']);
     });
 
-    gulp.task(prefix + 'watch-build', () => {
+    gulp.task(config.prefix + 'watch-build', () => {
         watching = true;
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [prefix + 'build']);
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'build']);
     });
 };
