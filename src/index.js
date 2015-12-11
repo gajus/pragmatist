@@ -13,6 +13,11 @@ import {
 } from 'canonical';
 
 import logEvents from './logEvents';
+import gutil from 'gulp-util';
+import prettyjson from 'prettyjson';
+// import stackTrace from 'stack-trace';
+
+import createTaskCraetor from './createTaskCreator';
 
 /**
  * @typedef {Object} options
@@ -28,7 +33,59 @@ import logEvents from './logEvents';
 export default (gulp, options = {}) => {
     let babelConfig,
         config,
-        watching;
+        plumberHandler,
+        taskCreator,
+        taskError;
+
+    taskCreator = createTaskCraetor(gulp, {
+        prefix: options.prefix,
+        preTask: (taskName) => {
+            if (taskError) {
+                gutil.log('Skipping task ' + chalk.cyan(taskName) + ' due to an error.');
+
+                return false;
+            }
+
+            return true;
+        }
+    });
+
+    plumberHandler = () => {
+        return plumber({
+            errorHandler: function (error) {
+                let errorPrint;
+
+                taskError = true;
+
+                errorPrint = error;
+
+                if (error.message) {
+                    errorPrint = {
+                        name: error.name,
+                        message: error.message,
+                        plugin: error.plugin
+                    };
+
+                    /* stack: _.map(stackTrace.parse(error), (crumb) => {
+                        return crumb.fileName + ':' + crumb.lineNumber + ':' + crumb.columnNumber;
+                    }) */
+
+                    /* eslint-disable no-underscore-dangle */
+                    if (error._babel) {
+                    /* eslint-enable no-underscore-dangle */
+                        errorPrint.code = {
+                            file: error.fileName + ':' + error.loc.line + ':' + error.loc.column,
+                            frame: error.codeFrame
+                        };
+                    }
+                }
+
+                gutil.log('\n\n' + prettyjson.render(errorPrint) + '\n');
+
+                this.emit('end');
+            }
+        });
+    };
 
     config = _.assign({}, {
         prefix: 'pragmatist:',
@@ -58,9 +115,7 @@ export default (gulp, options = {}) => {
         logEvents(gulp);
     }
 
-    watching = false;
-
-    gulp.task(config.prefix + 'lint', () => {
+    taskCreator('lint', () => {
         return glob([
             './src/**/*.js',
             './tests/**/*.js',
@@ -82,17 +137,17 @@ export default (gulp, options = {}) => {
         });
     });
 
-    gulp.task(config.prefix + 'clean', () => {
+    taskCreator('clean', () => {
         return del('./dist');
     });
 
-    gulp.task(config.prefix + 'copy', [config.prefix + 'clean'], () => {
+    taskCreator('copy', ['clean'], () => {
         return gulp
             .src('./src/**/*')
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(config.prefix + 'build', [config.prefix + 'copy'], () => {
+    taskCreator('build', ['copy'], () => {
         if (!config.browser) {
             /* eslint-disable no-console */
             console.log('Making browser ' + chalk.red('incompatible build') + '. Build is configured to compile node v5+ ready code. ES2015 Babel preset can be added using "browser" option.');
@@ -101,72 +156,71 @@ export default (gulp, options = {}) => {
 
         return gulp
             .src('./src/**/*.js')
+            .pipe(plumberHandler())
             .pipe(sourcemaps.init())
             .pipe(babel(babelConfig))
             .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('./dist'));
     });
 
-    gulp.task(config.prefix + 'task-pre-copy-clean', () => {
+    taskCreator('task-pre-copy-clean', () => {
         return del('./.test-build');
     });
 
-    gulp.task(config.prefix + 'test-copy', [config.prefix + 'task-pre-copy-clean'], () => {
+    taskCreator('test-copy', ['task-pre-copy-clean'], () => {
         return gulp
             .src(['./tests/**/*', './src/**/*'], {
                 base: './'
             }).pipe(gulp.dest('./.test-build'));
     });
 
-    gulp.task(config.prefix + 'test-build', [config.prefix + 'test-copy'], () => {
+    taskCreator('test-build', ['test-copy'], () => {
         return gulp
             .src('./.test-build/**/*.js')
+            .pipe(plumberHandler())
             .pipe(babel(babelConfig))
             .pipe(gulp.dest('./.test-build'));
     });
 
-    gulp.task(config.prefix + 'test-hook-require', [config.prefix + 'test-build'], () => {
+    taskCreator('test-hook-require', ['test-build'], () => {
         return gulp
             .src('./.test-build/src/**/*.js')
+            .pipe(plumberHandler())
             .pipe(istanbul())
             .pipe(istanbul.hookRequire());
     });
 
-    gulp.task(config.prefix + 'test-run', [config.prefix + 'test-hook-require'], () => {
+    taskCreator('test-run', ['test-hook-require'], () => {
         return gulp
             .src(['./.test-build/tests/**/*.js'])
-            .pipe(plumber())
+            .pipe(plumberHandler())
             .pipe(mocha())
             .pipe(istanbul.writeReports());
     });
 
-    gulp.task(config.prefix + 'test-clean', [config.prefix + 'test-run'], () => {
+    taskCreator('test-clean', ['test-run'], () => {
         return del('./.test-build');
     });
 
-    gulp.task(config.prefix + 'test', [config.prefix + 'test-clean']);
+    taskCreator('test', ['test-clean']);
 
-    gulp.task(config.prefix + 'watch', () => {
-        watching = true;
-
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
+    gulp.task(config.prefix + 'pre-watch', () => {
+        taskError = false;
     });
 
-    gulp.task(config.prefix + 'watch-lint', () => {
-        watching = true;
-
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'lint']);
+    taskCreator('watch', () => {
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
     });
 
-    gulp.task(config.prefix + 'watch-test', () => {
-        watching = true;
-
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'test']);
+    taskCreator('watch-lint', () => {
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint']);
     });
 
-    gulp.task(config.prefix + 'watch-build', () => {
-        watching = true;
+    taskCreator('watch-test', () => {
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'test']);
+    });
 
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'build']);
+    taskCreator('watch-build', () => {
+        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'build']);
     });
 };
