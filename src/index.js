@@ -77,6 +77,10 @@ export default (gulp, options = {}) => {
                             file: error.fileName + ':' + error.loc.line + ':' + error.loc.column,
                             frame: error.codeFrame
                         };
+
+                        if (errorPrint.message.indexOf(error.fileName + ': ') === 0) {
+                            errorPrint.message = errorPrint.message.substr(error.fileName.length + 2);
+                        }
                     }
                 }
 
