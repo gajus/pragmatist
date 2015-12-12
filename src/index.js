@@ -2,9 +2,8 @@ import _ from 'lodash';
 import del from 'del';
 import babel from 'gulp-babel';
 import sourcemaps from 'gulp-sourcemaps';
-import mocha from 'gulp-mocha';
+import mocha from 'gulp-spawn-mocha';
 import glob from 'globby';
-import istanbul from 'gulp-istanbul';
 import plumber from 'gulp-plumber';
 import chalk from 'chalk';
 import {
@@ -41,7 +40,7 @@ export default (gulp, options = {}) => {
         prefix: options.prefix,
         preTask: (taskName) => {
             if (taskError) {
-                gutil.log('Skipping task ' + chalk.cyan(taskName) + ' due to an error.');
+                gutil.log(chalk.red('Skipping') + ' task ' + chalk.cyan(taskName) + ' due to an earlier error.');
 
                 return false;
             }
@@ -60,6 +59,8 @@ export default (gulp, options = {}) => {
                 errorPrint = error;
 
                 if (error.message) {
+                    // console.log('error', error.stack);
+
                     errorPrint = {
                         name: error.name,
                         message: error.message,
@@ -105,6 +106,10 @@ export default (gulp, options = {}) => {
             require.resolve('babel-plugin-lodash')
         ]
     };
+
+    if (config.types) {
+        babelConfig.plugins.unshift(require.resolve('babel-plugin-typecheck'));
+    }
 
     if (config.browser) {
         babelConfig.presets.unshift(require.resolve('babel-preset-es2015'));
@@ -182,24 +187,25 @@ export default (gulp, options = {}) => {
         return gulp
             .src('./.test-build/**/*.js')
             .pipe(plumberHandler())
+            .pipe(sourcemaps.init())
             .pipe(babel(babelConfig))
+            .pipe(sourcemaps.write('.'))
             .pipe(gulp.dest('./.test-build'));
     });
 
     taskCreator('test-hook-require', ['test-build'], () => {
         return gulp
             .src('./.test-build/src/**/*.js')
-            .pipe(plumberHandler())
-            .pipe(istanbul())
-            .pipe(istanbul.hookRequire());
+            .pipe(plumberHandler());
     });
 
     taskCreator('test-run', ['test-hook-require'], () => {
         return gulp
             .src(['./.test-build/tests/**/*.js'])
             .pipe(plumberHandler())
-            .pipe(mocha())
-            .pipe(istanbul.writeReports());
+            .pipe(mocha({
+                istanbul: true
+            }));
     });
 
     taskCreator('test-clean', ['test-run'], () => {

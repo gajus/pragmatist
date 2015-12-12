@@ -14,6 +14,10 @@ argv = yargs
         browser: {
             description: 'Uses es2015 Babel preset for the build.',
             type: 'boolean'
+        },
+        types: {
+            description: 'Writes type assertions using the flow type annotations.',
+            type: 'boolean'
         }
     })
     .argv;
@@ -21,7 +25,8 @@ argv = yargs
 pragmatist(gulp, {
     prefix: 'pragmatist:',
     forceLogging: true,
-    browser: argv.browser
+    browser: argv.browser,
+    types: argv.types
 });
 
 knownTaskNames = _.keys(gulp.tasks);
@@ -35,7 +40,7 @@ P
         executeTaskName = 'pragmatist:' + taskName;
 
         if (_.indexOf(knownTaskNames, executeTaskName) === -1) {
-            throw new Error('"pragmatist:' + executeTaskName + '" task does not exist.');
+            throw new Error('"' + executeTaskName + '" task does not exist.');
         }
 
         return new P((resolve) => {
