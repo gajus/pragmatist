@@ -72,7 +72,7 @@ export default (gulp, options = {}) => {
                     }) */
 
                     /* eslint-disable no-underscore-dangle */
-                    if (error._babel) {
+                    if (error._babel && error.codeFrame) {
                     /* eslint-enable no-underscore-dangle */
                         errorPrint.code = {
                             file: error.fileName + ':' + error.loc.line + ':' + error.loc.column,
@@ -103,6 +103,7 @@ export default (gulp, options = {}) => {
             require.resolve('babel-preset-react')
         ],
         plugins: [
+            require.resolve('./babel-plugin-source-map-support'),
             require.resolve('babel-plugin-lodash')
         ]
     };
@@ -189,7 +190,9 @@ export default (gulp, options = {}) => {
             .pipe(plumberHandler())
             .pipe(sourcemaps.init())
             .pipe(babel(babelConfig))
-            .pipe(sourcemaps.write('.'))
+            .pipe(sourcemaps.write('.', {
+                sourceRoot: process.cwd()
+            }))
             .pipe(gulp.dest('./.test-build'));
     });
 
