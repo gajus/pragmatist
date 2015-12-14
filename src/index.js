@@ -34,7 +34,10 @@ export default (gulp, options = {}) => {
         config,
         plumberHandler,
         taskCreator,
-        taskError;
+        taskError,
+        watching;
+
+    watching = false;
 
     taskCreator = createTaskCraetor(gulp, {
         prefix: options.prefix,
@@ -87,7 +90,9 @@ export default (gulp, options = {}) => {
 
                 gutil.log('\n\n' + prettyjson.render(errorPrint) + '\n');
 
-                this.emit('end');
+                if (watching) {
+                    this.emit('end');
+                }
             }
         });
     };
@@ -206,7 +211,9 @@ export default (gulp, options = {}) => {
             .src(['./.test-build/tests/**/*.js'])
             .pipe(plumberHandler())
             .pipe(mocha({
+                /* eslint-disable id-length */
                 r: require.resolve('source-map-support/register'),
+                /* eslint-enable id-length */
                 istanbul: true
             }));
     });
@@ -218,6 +225,7 @@ export default (gulp, options = {}) => {
     taskCreator('test', ['test-clean']);
 
     gulp.task(config.prefix + 'pre-watch', () => {
+        watching = true;
         taskError = false;
     });
 

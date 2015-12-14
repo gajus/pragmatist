@@ -22,6 +22,7 @@ export default (gulp, options = {}) => {
             taskFn;
 
         dependencies = [];
+
         taskFn = () => {
             return false;
         };

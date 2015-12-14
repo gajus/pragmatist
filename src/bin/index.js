@@ -34,7 +34,9 @@ executeTaskNames = argv._;
 
 P
     .resolve(executeTaskNames)
+    /* eslint-disable lodash3/prefer-lodash-method */
     .map((taskName) => {
+    /* eslint-enable lodash3/prefer-lodash-method */
         let executeTaskName;
 
         executeTaskName = 'pragmatist:' + taskName;
