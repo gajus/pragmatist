@@ -103,7 +103,6 @@ export default (gulp, options = {}) => {
             require.resolve('babel-preset-react')
         ],
         plugins: [
-            require.resolve('./babel-plugin-source-map-support'),
             require.resolve('babel-plugin-lodash')
         ]
     };
@@ -207,6 +206,7 @@ export default (gulp, options = {}) => {
             .src(['./.test-build/tests/**/*.js'])
             .pipe(plumberHandler())
             .pipe(mocha({
+                r: require.resolve('source-map-support/register'),
                 istanbul: true
             }));
     });
