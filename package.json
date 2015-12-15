@@ -19,7 +19,7 @@
     "build": "rm -fr ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
     "lint": "canonical ./src/"
   },
-  "version": "2.3.4",
+  "version": "2.3.5",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gk@anuary.com",
