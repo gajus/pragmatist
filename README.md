@@ -99,6 +99,14 @@ To compile code back to ES3, you must add `--browser` flag to the command line, 
 pragmatist build --browser
 ```
 
+### Types
+
+Use `--types` flag to enable https://github.com/codemix/babel-plugin-typecheck.
+
+```sh
+pragmatist build --types
+```
+
 ## NPM
 
 A typical project using `pragmatist` will define the following NPM scripts:
