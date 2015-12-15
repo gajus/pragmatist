@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "build": "rm -fr ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
-    "lint": "canonical ./src"
+    "lint": "canonical ./src/"
   },
   "version": "2.3.3",
   "author": {

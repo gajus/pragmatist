@@ -40,7 +40,6 @@ export default (gulp, options = {}) => {
     watching = false;
 
     taskCreator = createTaskCraetor(gulp, {
-        prefix: options.prefix,
         preTask: (taskName) => {
             if (taskError) {
                 gutil.log(chalk.red('Skipping') + ' task ' + chalk.cyan(taskName) + ' due to an earlier error.');
@@ -49,12 +48,13 @@ export default (gulp, options = {}) => {
             }
 
             return true;
-        }
+        },
+        prefix: options.prefix
     });
 
     plumberHandler = () => {
         return plumber({
-            errorHandler: function (error) {
+            errorHandler (error) {
                 let errorPrint;
 
                 taskError = true;
@@ -65,8 +65,8 @@ export default (gulp, options = {}) => {
                     // console.log('error', error.stack);
 
                     errorPrint = {
-                        name: error.name,
                         message: error.message,
+                        name: error.name,
                         plugin: error.plugin
                     };
 
@@ -98,17 +98,17 @@ export default (gulp, options = {}) => {
     };
 
     config = _.assign({}, {
-        prefix: 'pragmatist:',
-        forceLogging: false
+        forceLogging: false,
+        prefix: 'pragmatist:'
     }, options);
 
     babelConfig = {
+        plugins: [
+            require.resolve('babel-plugin-lodash')
+        ],
         presets: [
             require.resolve('babel-preset-stage-0'),
             require.resolve('babel-preset-react')
-        ],
-        plugins: [
-            require.resolve('babel-plugin-lodash')
         ]
     };
 
@@ -211,10 +211,10 @@ export default (gulp, options = {}) => {
             .src(['./.test-build/tests/**/*.js'])
             .pipe(plumberHandler())
             .pipe(mocha({
+                istanbul: true,
                 /* eslint-disable id-length */
-                r: require.resolve('source-map-support/register'),
+                r: require.resolve('source-map-support/register')
                 /* eslint-enable id-length */
-                istanbul: true
             }));
     });
 

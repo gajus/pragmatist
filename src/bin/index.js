@@ -23,9 +23,9 @@ argv = yargs
     .argv;
 
 pragmatist(gulp, {
-    prefix: 'pragmatist:',
-    forceLogging: true,
     browser: argv.browser,
+    forceLogging: true,
+    prefix: 'pragmatist:',
     types: argv.types
 });
 
