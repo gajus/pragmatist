@@ -1,5 +1,8 @@
 # Pragmatist
 
+[![NPM version](http://img.shields.io/npm/v/pragmatist.svg?style=flat-square)](https://www.npmjs.com/package/pragmatist)
+[![js-canonical-style](https://img.shields.io/badge/code%20style-canonical-brightgreen.svg?style=flat-square)](https://github.com/gajus/canonical)
+
 A collection of tasks to standardize builds.
 
 ## Tasks
