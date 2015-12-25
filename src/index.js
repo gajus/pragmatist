@@ -104,7 +104,8 @@ export default (gulp, options = {}) => {
 
     babelConfig = {
         plugins: [
-            require.resolve('babel-plugin-lodash')
+            require.resolve('babel-plugin-lodash'),
+            require.resolve('babel-plugin-add-module-exports')
         ],
         presets: [
             require.resolve('babel-preset-stage-0'),
