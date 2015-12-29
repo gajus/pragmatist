@@ -144,11 +144,9 @@ export default (gulp, options = {}) => {
             formatter = getFormatter();
             report = lintFiles(paths);
 
-            if (report.errorCount || report.warningCount) {
-                /* eslint-disable no-console */
-                console.log(formatter(report));
-                /* eslint-enable no-console */
-            }
+            /* eslint-disable no-console */
+            console.log(formatter(report));
+            /* eslint-enable no-console */
         });
     });
 
