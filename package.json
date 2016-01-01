@@ -20,7 +20,7 @@
     "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist",
     "lint": "canonical ./src/"
   },
-  "version": "2.3.13",
+  "version": "2.3.14",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
