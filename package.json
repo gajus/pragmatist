@@ -17,6 +17,7 @@
   ],
   "scripts": {
     "build": "rm -fr ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
+    "watch-build": "rm -fr ./dist; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist",
     "lint": "canonical ./src/"
   },
   "version": "2.3.13",
