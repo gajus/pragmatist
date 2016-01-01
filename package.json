@@ -16,8 +16,8 @@
     "scss"
   ],
   "scripts": {
-    "build": "rm -fr ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
-    "watch-build": "rm -fr ./dist; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist",
+    "build": "rm -fr ./dist;  cp -r ./src ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
+    "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist",
     "lint": "canonical ./src/"
   },
   "version": "2.3.13",
@@ -48,7 +48,7 @@
   "dependencies": {
     "babel": "^6.3.26",
     "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-plugin-lodash": "^1.0.2",
+    "babel-plugin-lodash-modularize": "^0.0.1",
     "babel-plugin-transform-class-properties": "^6.3.13",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
     "babel-plugin-transform-es2015-parameters": "^6.3.26",
@@ -65,7 +65,7 @@
     "gulp-babel": "^6.1.1",
     "gulp-plumber": "^1.0.1",
     "gulp-sourcemaps": "^1.6.0",
-    "gulp-spawn-mocha": "^2.2.1",
+    "gulp-spawn-mocha": "^2.2.2",
     "gulp-util": "^3.0.7",
     "install": "^0.4.1",
     "lodash": "^3.10.1",

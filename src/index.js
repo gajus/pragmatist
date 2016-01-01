@@ -104,13 +104,15 @@ export default (gulp, options = {}) => {
 
     babelConfig = {
         plugins: [
-            require.resolve('babel-plugin-lodash'),
+            require.resolve('babel-plugin-lodash-modularize'),
             require.resolve('babel-plugin-add-module-exports')
         ],
         presets: [
             require.resolve('babel-preset-stage-0'),
             require.resolve('babel-preset-react')
-        ]
+        ],
+        babelrc: false,
+        extends: __dirname + '/babelrc.json'
     };
 
     if (config.types) {
