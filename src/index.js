@@ -230,19 +230,19 @@ export default (gulp, options = {}) => {
         taskError = false;
     });
 
-    taskCreator('watch', () => {
+    taskCreator('watch', [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
     });
 
-    taskCreator('watch-lint', () => {
+    taskCreator('watch-lint', [config.prefix + 'pre-watch', config.prefix + 'lint'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint']);
     });
 
-    taskCreator('watch-test', () => {
+    taskCreator('watch-test', [config.prefix + 'pre-watch', config.prefix + 'test'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'test']);
     });
 
-    taskCreator('watch-build', () => {
+    taskCreator('watch-build', [config.prefix + 'pre-watch', config.prefix + 'build'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'build']);
     });
 };
