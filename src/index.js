@@ -230,19 +230,19 @@ export default (gulp, options = {}) => {
         taskError = false;
     });
 
-    taskCreator('watch', [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build'], () => {
+    taskCreator('watch', ['pre-watch', 'lint', 'test', 'build'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
     });
 
-    taskCreator('watch-lint', [config.prefix + 'pre-watch', config.prefix + 'lint'], () => {
+    taskCreator('watch-lint', ['pre-watch', 'lint'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint']);
     });
 
-    taskCreator('watch-test', [config.prefix + 'pre-watch', config.prefix + 'test'], () => {
+    taskCreator('watch-test', ['pre-watch', 'test'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'test']);
     });
 
-    taskCreator('watch-build', [config.prefix + 'pre-watch', config.prefix + 'build'], () => {
+    taskCreator('watch-build', ['pre-watch', 'build'], () => {
         gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'build']);
     });
 };
