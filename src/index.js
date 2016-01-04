@@ -10,13 +10,14 @@ import {
     lintFiles,
     getFormatter
 } from 'canonical';
-
-import logEvents from './logEvents';
 import gutil from 'gulp-util';
 import prettyjson from 'prettyjson';
+import chokidar from 'chokidar';
+import runSequenceUnpaired from 'run-sequence';
 // import stackTrace from 'stack-trace';
-
+import logEvents from './logEvents';
 import createTaskCraetor from './createTaskCreator';
+
 
 /**
  * @typedef {Object} options
@@ -32,10 +33,51 @@ import createTaskCraetor from './createTaskCreator';
 export default (gulp, options = {}) => {
     let babelConfig,
         config,
+        debounceSequence,
         plumberHandler,
+        runSequence,
         taskCreator,
         taskError,
-        watching;
+        watching,
+        preWatch;
+
+    runSequence = runSequenceUnpaired.use(gulp);
+
+    /**
+     * Debounces execution of 'task' and queues 'task' to run again
+     * if an outside attempt to call 'task' was done before the
+     * previous execution have ended.
+     */
+    debounceSequence = (task) => {
+        let runTask,
+            taskIsRunning;
+
+        taskIsRunning = false;
+
+        runTask = () => {
+            // console.log('TASK REQUEST');
+
+            if (taskIsRunning) {
+                runTask();
+
+                return;
+            }
+
+            taskIsRunning = true;
+
+            // console.log('TASK START');
+
+            task(() => {
+                taskIsRunning = false;
+
+                // console.log('TASK DONE');
+            });
+        };
+
+        runTask = _.debounce(runTask, 100);
+
+        return runTask;
+    };
 
     watching = false;
 
@@ -225,24 +267,68 @@ export default (gulp, options = {}) => {
 
     taskCreator('test', ['test-clean']);
 
-    gulp.task(config.prefix + 'pre-watch', () => {
+    preWatch = () => {
         watching = true;
         taskError = false;
-    });
+    };
 
     taskCreator('watch', () => {
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint', config.prefix + 'test', config.prefix + 'build']);
+        chokidar
+            .watch([
+                './src/**/*',
+                './tests/**/*'
+            ])
+            .on('all', debounceSequence((done) => {
+                runSequence([
+                    config.prefix + 'lint',
+                    config.prefix + 'test',
+                    config.prefix + 'build'
+                ], done);
+            }));
     });
 
     taskCreator('watch-lint', () => {
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'lint']);
+        chokidar
+            .watch([
+                './src/**/*',
+                './tests/**/*'
+            ])
+            .on('all', debounceSequence((done) => {
+                preWatch();
+
+                runSequence([
+                    config.prefix + 'lint'
+                ], done);
+            }));
     });
 
     taskCreator('watch-test', () => {
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'test']);
+        chokidar
+            .watch([
+                './src/**/*',
+                './tests/**/*'
+            ])
+            .on('all', debounceSequence((done) => {
+                preWatch();
+
+                runSequence([
+                    config.prefix + 'test'
+                ], done);
+            }));
     });
 
     taskCreator('watch-build', () => {
-        gulp.watch(['./src/**/*', './tests/**/*'], [config.prefix + 'pre-watch', config.prefix + 'build']);
+        chokidar
+            .watch([
+                './src/**/*',
+                './tests/**/*'
+            ])
+            .on('all', debounceSequence((done) => {
+                preWatch();
+
+                runSequence([
+                    config.prefix + 'build'
+                ], done);
+            }));
     });
 };
