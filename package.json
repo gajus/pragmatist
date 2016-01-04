@@ -19,8 +19,7 @@
     "build": "rm -fr ./dist;  cp -r ./src ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist --source-maps",
     "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist --source-maps",
     "lint": "canonical ./src/",
-    "publish-bundle": "node ./node_modules/.bin/bundle-dependencies publish",
-    "postinstall": "node ./node_modules/.bin/bundle-dependencies extract"
+    "publish-bundle": "node ./node_modules/.bin/bundle-dependencies publish"
   },
   "version": "2.3.50",
   "author": {
@@ -30,7 +29,7 @@
   },
   "license": "BSD-3-Clause",
   "dependencies": {
-    "bundle-dependencies": "0.0.14"
+    "chalk": "*"
   },
   "devDependencies": {}
 }
