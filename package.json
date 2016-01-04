@@ -2,7 +2,6 @@
   "name": "pragmatist",
   "description": "A collection of tasks to standardize builds.",
   "main": "./dist",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/gajus/pragmatist"
@@ -22,7 +21,7 @@
     "prepublish": "node ./node_modules/.bin/bundle-dependencies prepublish",
     "postpublish": "node ./node_modules/.bin/bundle-dependencies postpublish"
   },
-  "version": "2.3.21",
+  "version": "2.3.22",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
