@@ -16,10 +16,11 @@
     "scss"
   ],
   "scripts": {
-    "build": "rm -fr ./dist;  cp -r ./src ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist",
-    "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist",
+    "build": "rm -fr ./dist;  cp -r ./src ./dist; node ./node_modules/.bin/babel ./src --out-dir ./dist --source-maps",
+    "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist --source-maps",
     "lint": "canonical ./src/",
-    "install": "rm -fr ./dist/node_modules; cp -r ./bundled_modules ./dist/node_modules"
+    "prepublish": "node ./node_modules/.bin/bundle-dependencies prepublish",
+    "postpublish": "node ./node_modules/.bin/bundle-dependencies postpublish"
   },
   "version": "2.3.18",
   "author": {
@@ -28,60 +29,10 @@
     "url": "http://gajus.com"
   },
   "license": "BSD-3-Clause",
-  "AAAbundledDependencies": [
-    "babel",
-    "babel-cli",
-    "babel-plugin-lodash",
-    "babel-preset-es2015",
-    "babel-preset-react",
-    "babel-preset-stage-0",
-    "source-map-support",
-    "canonical",
-    "del",
-    "gulp",
-    "gulp-babel",
-    "gulp-spawn-mocha",
-    "gulp-plumber",
-    "gulp-sourcemaps",
-    "gulp-util",
-    "pretty-hrtime"
-  ],
-  "AAAdependencies": {
-    "babel": "^6.3.26",
-    "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-plugin-lodash-modularize": "^0.2.0",
-    "babel-plugin-transform-class-properties": "^6.3.13",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.3.16",
-    "babel-plugin-transform-es2015-parameters": "^6.3.26",
-    "babel-plugin-typecheck": "^3.5.1",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-react": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
-    "bluebird": "^3.1.1",
-    "canonical": "^2.7.7",
-    "chalk": "^1.1.1",
-    "chokidar": "^1.4.2",
-    "del": "^2.2.0",
-    "globby": "^4.0.0",
-    "gulp": "^3.9.0",
-    "gulp-babel": "^6.1.1",
-    "gulp-plumber": "^1.0.1",
-    "gulp-sourcemaps": "^1.6.0",
-    "gulp-spawn-mocha": "^2.2.2",
-    "gulp-util": "^3.0.7",
-    "lodash": "^3.10.1",
-    "pretty-hrtime": "^1.0.1",
-    "prettyjson": "^1.1.3",
-    "run-sequence": "^1.1.5",
-    "source-map-support": "^0.4.0",
-    "stack-trace": "^0.0.9",
-    "yargs": "^3.31.0"
+  "dependencies": {
+    "lodash": "^3.10.1"
   },
-  "AAAdevDependencies": {
-    "babel": "^6.3.26",
-    "babel-cli": "^6.3.17",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.3.13",
-    "canonical": "^2.7.7"
+  "devDependencies": {
+    "bundle-dependencies": "^0.0.3"
   }
 }
