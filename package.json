@@ -21,7 +21,7 @@
     "prepublish": "node ./node_modules/.bin/bundle-dependencies prepublish",
     "postpublish": "node ./node_modules/.bin/bundle-dependencies postpublish"
   },
-  "version": "2.3.22",
+  "version": "2.3.23",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
