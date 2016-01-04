@@ -31,6 +31,6 @@
     "lodash": "^3.10.1"
   },
   "devDependencies": {
-    "bundle-dependencies": "^0.0.5"
+    "bundle-dependencies": "^0.0.6"
   }
 }
