@@ -21,7 +21,7 @@
     "lint": "canonical ./src/",
     "install": "rm -fr ./dist/node_modules; cp -r ./bundled_modules ./dist/node_modules"
   },
-  "version": "2.3.17",
+  "version": "2.3.18",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
