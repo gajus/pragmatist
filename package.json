@@ -2,7 +2,7 @@
   "name": "pragmatist",
   "description": "A collection of tasks to standardize builds.",
   "main": "./dist",
-  "bin": "./dist/bin",
+
   "repository": {
     "type": "git",
     "url": "https://github.com/gajus/pragmatist"
