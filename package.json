@@ -20,7 +20,7 @@
     "lint": "canonical ./src/",
     "publish-bundle": "node ./node_modules/.bin/bundle-dependencies publish"
   },
-  "version": "2.3.31",
+  "version": "2.3.32",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
