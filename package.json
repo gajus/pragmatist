@@ -21,7 +21,7 @@
     "lint": "canonical ./src/",
     "publish-bundle": "node ./node_modules/.bin/bundle-dependencies publish"
   },
-  "version": "2.3.51",
+  "version": "2.3.52",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
