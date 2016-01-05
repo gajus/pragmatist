@@ -15,6 +15,10 @@ argv = yargs
             description: 'Uses es2015 Babel preset for the build.',
             type: 'boolean'
         },
+        notifications: {
+            description: 'Sends a notification to the OS if an error occurs.',
+            type: 'boolean'
+        },
         types: {
             description: 'Writes type assertions using the flow type annotations.',
             type: 'boolean'
@@ -25,6 +29,7 @@ argv = yargs
 pragmatist(gulp, {
     browser: argv.browser,
     forceLogging: true,
+    notifications: argv.notifications,
     prefix: 'pragmatist:',
     types: argv.types
 });

@@ -102,6 +102,14 @@ To compile code back to ES3, you must add `--browser` flag to the command line, 
 pragmatist build --browser
 ```
 
+### Notifications
+
+Use `--notifications` flag to enable OS level notifications about errors that occur during the build.
+
+```sh
+pragmatist build --notifications
+```
+
 ### Types
 
 Use `--types` flag to enable https://github.com/codemix/babel-plugin-typecheck.

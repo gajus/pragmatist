@@ -6,6 +6,8 @@ import mocha from 'gulp-spawn-mocha';
 import glob from 'globby';
 import plumber from 'gulp-plumber';
 import chalk from 'chalk';
+import path from 'path';
+import notifier from 'node-notifier';
 import {
     lintFiles,
     getFormatter
@@ -35,11 +37,11 @@ export default (gulp, options = {}) => {
         config,
         debounceSequence,
         plumberHandler,
+        preWatch,
         runSequence,
         taskCreator,
         taskError,
-        watching,
-        preWatch;
+        watching;
 
     runSequence = runSequenceUnpaired.use(gulp);
 
@@ -106,6 +108,13 @@ export default (gulp, options = {}) => {
                 if (error.message) {
                     // console.log('error', error.stack);
 
+                    if (options.notifications) {
+                        notifier.notify({
+                            title: error.name,
+                            message: error.message
+                        });
+                    }
+
                     errorPrint = {
                         message: error.message,
                         name: error.name,
@@ -145,6 +154,8 @@ export default (gulp, options = {}) => {
     }, options);
 
     babelConfig = {
+        babelrc: false,
+        extends: path.resolve(__dirname, './babelrc.json'),
         plugins: [
             require.resolve('babel-plugin-lodash-modularize'),
             require.resolve('babel-plugin-add-module-exports')
@@ -152,9 +163,7 @@ export default (gulp, options = {}) => {
         presets: [
             require.resolve('babel-preset-stage-0'),
             require.resolve('babel-preset-react')
-        ],
-        babelrc: false,
-        extends: __dirname + '/babelrc.json'
+        ]
     };
 
     if (config.types) {
