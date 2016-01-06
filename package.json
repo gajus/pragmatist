@@ -20,7 +20,7 @@
     "watch-build": "npm run build; node ./node_modules/.bin/babel --watch ./src --out-dir ./dist --source-maps",
     "lint": "canonical ./src/",
     "bundle-dependencies": "bundled-dependencies",
-    "bundle-publish": "npm run bundle-dependencies; rm -fr ./node_modules; npm install --production; git commit -a -m 'Bundled dependencies.'; npm version patch; npm publish"
+    "bundle-publish": "npm run bundle-dependencies; rm -fr ./node_modules; npm install --production; git commit -a -m 'Bundled dependencies.'; npm version patch; npm publish; npm install; git push"
   },
   "version": "2.3.70",
   "author": {
@@ -71,7 +71,7 @@
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "bluebird": "^3.1.1",
-    "canonical": "^2.7.11",
+    "canonical": "^2.7.12",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.2",
     "del": "^2.2.0",
@@ -97,6 +97,6 @@
     "babel-preset-stage-0": "^6.3.13",
     "bundle-dependencies": "^0.0.24",
     "bundled-dependencies": "^2.1.0",
-    "canonical": "^2.7.11"
+    "canonical": "^2.7.12"
   }
 }
