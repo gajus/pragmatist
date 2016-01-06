@@ -22,7 +22,7 @@
     "bundle-dependencies": "bundled-dependencies",
     "bundle-publish": "npm run bundle-dependencies; rm -fr ./node_modules; npm install --production; git commit -a -m 'Bundled dependencies.'; npm version patch; npm publish"
   },
-  "version": "2.3.68",
+  "version": "2.3.69",
   "author": {
     "name": "Gajus Kuizinas",
     "email": "gajus@gajus.com",
