@@ -274,7 +274,9 @@ export default (gulp, options = {}) => {
         return del('./.test-build');
     });
 
-    taskCreator('test', ['test-clean']);
+    taskCreator('test', ['test-clean'], (done) => {
+        done();
+    });
 
     preWatch = () => {
         watching = true;
