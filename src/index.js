@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import del from 'del';
 import babel from 'gulp-babel';
+import Bluebird from 'bluebird';
 import sourcemaps from 'gulp-sourcemaps';
 import mocha from 'gulp-spawn-mocha';
 import glob from 'globby';
@@ -16,10 +17,11 @@ import gutil from 'gulp-util';
 import prettyjson from 'prettyjson';
 import chokidar from 'chokidar';
 import runSequenceUnpaired from 'run-sequence';
+import CssComb from 'csscomb';
 // import stackTrace from 'stack-trace';
 import logEvents from './logEvents';
 import createTaskCraetor from './createTaskCreator';
-
+import cssCombConfiguration from './csscomb.json';
 
 /**
  * @typedef {Object} options
@@ -201,6 +203,20 @@ export default (gulp, options = {}) => {
             console.log(formatter(report));
             /* eslint-enable no-console */
         });
+    });
+
+    taskCreator('format-css', () => {
+        let comb;
+
+        comb = new CssComb(cssCombConfiguration);
+
+        return Bluebird.resolve(glob([
+            './src/**/*.css',
+            './src/**/*.scss'
+        ]))
+            .map((path) => {
+                return comb.processPath(path);
+            });
     });
 
     taskCreator('clean', () => {
