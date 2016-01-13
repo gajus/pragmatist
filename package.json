@@ -19,6 +19,7 @@
         "canonical",
         "chalk",
         "chokidar",
+        "csscomb",
         "del",
         "globby",
         "gulp",
