@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import gutil from 'gulp-util';
+import log from 'fancy-log';
 import chalk from 'chalk';
 import prettyHrtime from 'pretty-hrtime';
 
@@ -33,7 +33,7 @@ export default (gulpInst) => {
     gulpInst.on('task_start', (event) => {
         // TODO: batch these
         // so when 5 tasks start at once it only logs one time with all 5
-        gutil.log('Starting', '\'' + chalk.cyan(event.task) + '\'...');
+        log('Starting', '\'' + chalk.cyan(event.task) + '\'...');
     });
 
     gulpInst.on('task_stop', (event) => {
@@ -41,7 +41,7 @@ export default (gulpInst) => {
 
         time = prettyHrtime(event.hrDuration);
 
-        gutil.log('Finished', '\'' + chalk.cyan(event.task) + '\'', 'after', chalk.magenta(time));
+        log('Finished', '\'' + chalk.cyan(event.task) + '\'', 'after', chalk.magenta(time));
     });
 
     gulpInst.on('task_err', (event) => {
@@ -51,12 +51,12 @@ export default (gulpInst) => {
         message = formatError(event);
         time = prettyHrtime(event.hrDuration);
 
-        gutil.log(
+        log(
             '\'' + chalk.cyan(event.task) + '\'',
             chalk.red('errored after'),
             chalk.magenta(time)
         );
 
-        gutil.log(message);
+        log(message);
     });
 };

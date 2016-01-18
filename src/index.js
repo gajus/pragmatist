@@ -13,7 +13,7 @@ import {
     lintFiles,
     getFormatter
 } from 'canonical';
-import gutil from 'gulp-util';
+import log from 'fancy-log';
 import prettyjson from 'prettyjson';
 import chokidar from 'chokidar';
 import runSequenceUnpaired from 'run-sequence';
@@ -88,7 +88,7 @@ export default (gulp, options = {}) => {
     taskCreator = createTaskCraetor(gulp, {
         preTask: (taskName) => {
             if (taskError) {
-                gutil.log(chalk.red('Skipping') + ' task ' + chalk.cyan(taskName) + ' due to an earlier error.');
+                log(chalk.red('Skipping') + ' task ' + chalk.cyan(taskName) + ' due to an earlier error.');
 
                 return false;
             }
@@ -141,7 +141,7 @@ export default (gulp, options = {}) => {
                     }
                 }
 
-                gutil.log('\n\n' + prettyjson.render(errorPrint) + '\n');
+                log('\n\n' + prettyjson.render(errorPrint) + '\n');
 
                 if (watching) {
                     this.emit('end');
@@ -214,8 +214,8 @@ export default (gulp, options = {}) => {
             './src/**/*.css',
             './src/**/*.scss'
         ]))
-            .map((path) => {
-                return comb.processPath(path);
+            .map((filePath) => {
+                return comb.processPath(filePath);
             });
     });
 
