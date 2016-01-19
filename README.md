@@ -96,14 +96,14 @@ Multiple tasks can be executed one after the other, e.g.
 pragmatist <task #1> <task #2> <task #3>
 ```
 
-### Browser
+### ES5
 
 The default behavior for `build` task is to compile code for [`node`](https://nodejs.org/). Specifically, for the latest version of `node`.
 
-To compile code back to ES3, you must add `--browser` flag to the command line, e.g.
+To compile code down to ES5, you must add `--es5` flag to the command line, e.g.
 
 ```sh
-pragmatist build --browser
+pragmatist build --es5
 ```
 
 ### Notifications
