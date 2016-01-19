@@ -116,10 +116,10 @@ pragmatist build --notifications
 
 ### Types
 
-Use `--types` flag to enable https://github.com/codemix/babel-plugin-typecheck.
+Use `--type-assertions` flag to enable [runtime type assertions](https://github.com/codemix/babel-plugin-typecheck).
 
 ```sh
-pragmatist build --types
+pragmatist build --type-assertions
 ```
 
 ## NPM
