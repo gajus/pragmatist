@@ -128,7 +128,7 @@ A typical project using `pragmatist` will define the following NPM scripts:
 
 ```json
 "scripts": {
-   "pragmatist": "node ./node_modules/.bin/pragmatist",
+   "pragmatist": "pragmatist",
    "lint": "npm run pragmatist lint",
    "test": "npm run pragmatist test",
    "build": "npm run pragmatist build",
