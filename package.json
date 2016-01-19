@@ -39,7 +39,7 @@
   ],
   "dependencies": {
     "babel-plugin-add-module-exports": "^0.1.2",
-    "babel-plugin-lodash-modularize": "^0.3.1",
+    "babel-plugin-lodash-modularize": "^0.3.2",
     "babel-plugin-transform-class-properties": "^6.4.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.4.0",
     "babel-plugin-transform-es2015-parameters": "^6.4.2",

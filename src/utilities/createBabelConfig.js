@@ -7,7 +7,12 @@ export default (config) => {
         babelrc: false,
         extends: path.resolve(__dirname, './../babelrc.json'),
         plugins: [
-            require.resolve('babel-plugin-lodash-modularize'),
+            [
+                require.resolve('babel-plugin-lodash-modularize'),
+                {
+                    "lodashVersion": "4.0.0"
+                }
+            ],
             require.resolve('babel-plugin-add-module-exports')
         ],
         presets: [
