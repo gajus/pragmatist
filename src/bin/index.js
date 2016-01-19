@@ -1,5 +1,7 @@
+#! /usr/bin/env node
+
 import _ from 'lodash';
-import P from 'bluebird';
+import Promise from 'bluebird';
 import gulp from 'gulp';
 import yargs from 'yargs';
 import pragmatist from './..';
@@ -11,7 +13,7 @@ let argv,
 argv = yargs
     .demand(1)
     .options({
-        browser: {
+        es5: {
             description: 'Uses es2015 Babel preset for the build.',
             type: 'boolean'
         },
@@ -19,25 +21,25 @@ argv = yargs
             description: 'Sends a notification to the OS if an error occurs.',
             type: 'boolean'
         },
-        types: {
-            description: 'Writes type assertions using the flow type annotations.',
+        typeAssertions: {
+            description: 'Inlines runtime type assertions for the type annotations.',
             type: 'boolean'
         }
     })
     .argv;
 
 pragmatist(gulp, {
-    browser: argv.browser,
+    es5: argv.es5,
     forceLogging: true,
     notifications: argv.notifications,
     prefix: 'pragmatist:',
-    types: argv.types
+    typeAssertions: argv.typeAssertions
 });
 
 knownTaskNames = _.keys(gulp.tasks);
 executeTaskNames = argv._;
 
-P
+Promise
     .resolve(executeTaskNames)
     /* eslint-disable lodash3/prefer-lodash-method */
     .map((taskName) => {
@@ -50,7 +52,7 @@ P
             throw new Error('"' + executeTaskName + '" task does not exist.');
         }
 
-        return new P((resolve) => {
+        return new Promise((resolve) => {
             gulp
                 .start(executeTaskName)
                 .on('task_stop', () => {
