@@ -13,9 +13,9 @@ Tasks that are not documented (including dependencies of the documented tasks th
 
 * Uses [Canonical](https://github.com/gajus/canonical) to lint all `*.css`, `*.scss` and `*.js` files in `./src` and `./tests` directories.
 
-#### `format-css`
+#### `fix`
 
-* Uses [csscomb](http://csscomb.com/) to format all `*css` and `*.scss` files in `./src` directory in accordance with [Canonical](https://github.com/gajus/canonical) requirements.
+<!-- * Uses [csscomb](http://csscomb.com/) to format all `*css` and `*.scss` files in `./src` directory in accordance with [Canonical](https://github.com/gajus/canonical) requirements. -->
 
 #### `build`
 

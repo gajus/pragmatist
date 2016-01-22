@@ -10,7 +10,7 @@ export default (config) => {
             [
                 require.resolve('babel-plugin-lodash-modularize'),
                 {
-                    "lodashVersion": "4.0.0"
+                    lodashVersion: '4.0.0'
                 }
             ],
             require.resolve('babel-plugin-add-module-exports')

@@ -2,7 +2,8 @@ import _ from 'lodash';
 import {
     testTaskCreator,
     lintTaskCreator,
-    buildTaskCreator
+    buildTaskCreator,
+    fixTaskCreator
 } from './taskCreators';
 import {
     watch,
@@ -49,6 +50,7 @@ export default (gulp, options = {}) => {
     testTaskCreator(config, gulp, babelConfig);
     lintTaskCreator(config, gulp);
     buildTaskCreator(config, gulp, babelConfig);
+    fixTaskCreator(config, gulp);
 
     gulp.task(config.prefix + 'watch', () => {
         watch([
