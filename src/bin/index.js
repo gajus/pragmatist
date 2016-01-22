@@ -21,7 +21,7 @@ argv = yargs
             description: 'Sends a notification to the OS if an error occurs.',
             type: 'boolean'
         },
-        typeAssertions: {
+        'type-assertions': {
             description: 'Inlines runtime type assertions for the type annotations.',
             type: 'boolean'
         }
