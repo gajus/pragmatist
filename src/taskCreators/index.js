@@ -1,14 +1,7 @@
 'create index';
 
-import buildTaskCreator from './buildTaskCreator.js';
-import fixTaskCreator from './fixTaskCreator.js';
-import lintTaskCreator from './lintTaskCreator.js';
-import testTaskCreator from './testTaskCreator.js';
-
-export {
-    buildTaskCreator,
-    fixTaskCreator,
-    lintTaskCreator,
-    testTaskCreator
-};
+export buildTaskCreator from './buildTaskCreator.js';
+export fixTaskCreator from './fixTaskCreator.js';
+export lintTaskCreator from './lintTaskCreator.js';
+export testTaskCreator from './testTaskCreator.js';
 

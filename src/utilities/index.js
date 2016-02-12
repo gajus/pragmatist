@@ -1,20 +1,10 @@
 'create index';
 
-import createBabelConfig from './createBabelConfig.js';
-import createPlumberConfig from './createPlumberConfig.js';
-import debounceSequence from './debounceSequence.js';
-import logEvents from './logEvents.js';
-import patchGulpSrc from './patchGulpSrc.js';
-import runSequence from './runSequence.js';
-import watch from './watch.js';
-
-export {
-    createBabelConfig,
-    createPlumberConfig,
-    debounceSequence,
-    logEvents,
-    patchGulpSrc,
-    runSequence,
-    watch
-};
+export createBabelConfig from './createBabelConfig.js';
+export createPlumberConfig from './createPlumberConfig.js';
+export debounceSequence from './debounceSequence.js';
+export logEvents from './logEvents.js';
+export patchGulpSrc from './patchGulpSrc.js';
+export runSequence from './runSequence.js';
+export watch from './watch.js';
 
