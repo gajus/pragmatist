@@ -48,7 +48,7 @@
         "babel-preset-react": "^6.5.0",
         "babel-preset-stage-0": "^6.5.0",
         "bluebird": "^3.3.1",
-        "canonical": "^3.0.7",
+        "canonical": "^3.0.8",
         "chalk": "^1.1.1",
         "chokidar": "^1.4.2",
         "csscomb": "^3.1.8",
@@ -74,7 +74,7 @@
         "babel-preset-es2015": "^6.5.0",
         "babel-preset-stage-0": "^6.5.0",
         "bundled-dependencies": "^2.1.0",
-        "canonical": "^3.0.7",
+        "canonical": "^3.0.8",
         "create-index": "^0.1.2",
         "jsonlint": "^1.6.2"
     },
