@@ -62,12 +62,12 @@
     "url": "https://github.com/gajus/pragmatist"
   },
   "scripts": {
-    "build": "rm -fr ./dist;  cp -r ./src ./dist; babel -- ./src --out-dir ./dist --source-maps",
+    "build": "rm -fr ./dist;  cp -r ./src ./dist; babel ./src --out-dir ./dist --source-maps",
     "create-index": "create-index ./src --update-index",
     "format-json": "jsonlint --sort-keys --in-place --indent '    '",
     "format-json-config": "npm run format-json ./package.json; npm run format-json ./src/babelrc.json",
     "lint": "canonical ./src/",
-    "watch-build": "npm run build; babel -- --watch ./src --out-dir ./dist --source-maps"
+    "watch-build": "npm run build; babel --watch ./src --out-dir ./dist --source-maps"
   },
   "version": "3.0.7"
 }
