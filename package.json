@@ -5,38 +5,6 @@
         "url": "http://gajus.com"
     },
     "bin": "./dist/bin/index.js",
-    "bundledDependencies": [
-        "babel-plugin-add-module-exports",
-        "babel-plugin-lodash-modularize",
-        "babel-plugin-transform-class-properties",
-        "babel-plugin-transform-es2015-modules-commonjs",
-        "babel-plugin-transform-es2015-parameters",
-        "babel-plugin-typecheck",
-        "babel-preset-es2015",
-        "babel-preset-react",
-        "babel-preset-stage-0",
-        "bluebird",
-        "canonical",
-        "chalk",
-        "chokidar",
-        "csscomb",
-        "del",
-        "fancy-log",
-        "globby",
-        "gulp",
-        "gulp-babel",
-        "gulp-mocha",
-        "gulp-plumber",
-        "gulp-sourcemaps",
-        "lodash",
-        "node-notifier",
-        "pretty-hrtime",
-        "prettyjson",
-        "run-sequence",
-        "source-map-support",
-        "stack-trace",
-        "yargs"
-    ],
     "dependencies": {
         "babel-plugin-add-module-exports": "^0.1.2",
         "babel-plugin-lodash-modularize": "^0.3.2",
@@ -94,15 +62,12 @@
         "url": "https://github.com/gajus/pragmatist"
     },
     "scripts": {
-        "babel": "babel",
-        "build": "rm -fr ./dist;  cp -r ./src ./dist; npm run babel -- ./src --out-dir ./dist --source-maps",
-        "bundle-dependencies": "bundled-dependencies",
-        "bundle-publish": "npm run build; npm run bundle-dependencies; git commit -m 'Bundled dependencies.' ./package.json; git push; rm -fr ./node_modules; npm install --production; npm dedupe; npm prune; npm publish; npm install;",
+        "build": "rm -fr ./dist;  cp -r ./src ./dist; babel -- ./src --out-dir ./dist --source-maps",
         "create-index": "create-index ./src --update-index",
         "format-json": "jsonlint --sort-keys --in-place --indent '    '",
         "format-json-config": "npm run format-json ./package.json; npm run format-json ./src/babelrc.json",
         "lint": "canonical ./src/",
-        "watch-build": "npm run build; npm run babel -- --watch ./src --out-dir ./dist --source-maps"
+        "watch-build": "npm run build; babel -- --watch ./src --out-dir ./dist --source-maps"
     },
     "version": "3.0.6"
 }
