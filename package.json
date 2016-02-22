@@ -93,7 +93,7 @@
   "scripts": {
     "build": "rm -fr ./dist;  cp -r ./src ./dist; babel ./src --out-dir ./dist --source-maps",
     "bundle-dependencies": "bundle-dependencies",
-    "bundle-publish": "npm run bundle-dependencies update --exclude canonical chokidar node-notifier; git commit -m 'Bundled dependencies.' ./package.json; git push; rm -fr ./node_modules; npm install --production $(bundle-dependencies list-bundled-dependencies); npm dedupe; npm prune; npm publish; npm install;",
+    "bundle-publish": "bundle-dependencies update --exclude canonical chokidar node-notifier; git commit -m 'Bundled dependencies.' ./package.json; git push; rm -fr ./node_modules; npm install --production $(bundle-dependencies list-bundled-dependencies); npm dedupe; npm prune; npm publish; npm install;",
     "create-index": "create-index ./src --update-index",
     "format-json": "jsonlint --sort-keys --in-place --indent '    '",
     "format-json-config": "npm run format-json ./package.json; npm run format-json ./src/babelrc.json",
