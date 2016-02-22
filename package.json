@@ -94,7 +94,7 @@
   },
   "scripts": {
     "build": "rm -fr ./dist;  cp -r ./src ./dist; babel ./src --out-dir ./dist --source-maps",
-    "bundle-dependencies": "bundle-dependencies --exclude chokidar",
+    "bundle-dependencies": "bundle-dependencies --exclude canonical chokidar node-notifier",
     "bundle-publish": "npm run build; npm run bundle-dependencies; git commit -m 'Bundled dependencies.' ./package.json; git push; rm -fr ./node_modules; npm install --production; npm dedupe; npm prune; npm publish; npm install;",
     "create-index": "create-index ./src --update-index",
     "format-json": "jsonlint --sort-keys --in-place --indent '    '",
