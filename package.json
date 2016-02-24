@@ -105,5 +105,5 @@
     "lint": "canonical lint ./src/",
     "watch-build": "npm run build; babel --watch ./src --out-dir ./dist --source-maps"
   },
-  "version": "3.0.14"
+  "version": "3.0.15"
 }
