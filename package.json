@@ -45,7 +45,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "bluebird": "^3.3.1",
-    "canonical": "^3.1.3",
+    "canonical": "^3.1.5",
     "chalk": "^1.1.1",
     "chokidar": "^1.4.2",
     "csscomb": "^3.1.8",
@@ -64,14 +64,15 @@
     "run-sequence": "^1.1.5",
     "source-map-support": "^0.4.0",
     "stack-trace": "^0.0.9",
-    "yargs": "^4.1.0"
+    "yargs": "^4.2.0"
   },
   "description": "A collection of tasks to standardize builds.",
   "devDependencies": {
+    "babel-cli": "^6.5.1",
     "babel-preset-es2015": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "bundle-dependencies": "^1.0.2",
-    "canonical": "^3.1.3",
+    "canonical": "^3.1.5",
     "create-index": "^0.1.2",
     "jsonlint": "^1.6.2"
   },
