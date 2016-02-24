@@ -27,6 +27,9 @@ export default (config) => {
 
     if (config.es5) {
         babelConfig.presets.unshift(require.resolve('babel-preset-es2015'));
+        babelConfig.plugins.push(require.resolve('babel-plugin-transform-proto-to-assign'));
+        babelConfig.plugins.push(require.resolve('babel-plugin-transform-object-set-prototype-of-to-assign'));
+        babelConfig.plugins.push([require.resolve('babel-plugin-transform-es2015-classes'), { "loose": true }]);
     } else {
         babelConfig.plugins.push(require.resolve('babel-plugin-transform-es2015-modules-commonjs'));
         babelConfig.plugins.push(require.resolve('babel-plugin-transform-es2015-parameters'));
