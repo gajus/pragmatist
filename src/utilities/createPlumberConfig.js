@@ -1,5 +1,6 @@
+import _ from 'lodash';
 import notifier from 'node-notifier';
-// import stackTrace from 'stack-trace';
+import stackTrace from 'stack-trace';
 import log from 'fancy-log';
 import prettyjson from 'prettyjson';
 
@@ -12,8 +13,6 @@ export default (config) => {
         errorPrint = error;
 
         if (error.message) {
-            // console.log('error', error.stack);
-
             if (config.notifications) {
                 notifier.notify({
                     message: error.message,
@@ -27,9 +26,11 @@ export default (config) => {
                 plugin: error.plugin
             };
 
-            /* stack: _.map(stackTrace.parse(error), (crumb) => {
-                return crumb.fileName + ':' + crumb.lineNumber + ':' + crumb.columnNumber;
-            }) */
+            if (error.stack) {
+                errorPrint.stack = _.map(stackTrace.parse(error), (crumb) => {
+                    return crumb.fileName + ':' + crumb.lineNumber + ':' + crumb.columnNumber;
+                });
+            }
 
             /* eslint-disable no-underscore-dangle */
             if (error._babel && error.codeFrame) {
