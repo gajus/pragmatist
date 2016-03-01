@@ -1,10 +1,12 @@
-import babel from 'gulp-babel';
+import babelCreator from 'gulp-babel2';
 import del from 'del';
 import sourcemaps from 'gulp-sourcemaps';
 import chalk from 'chalk';
 import {
     runSequence
 } from './../utilities';
+
+const babel = babelCreator();
 
 export default (config, gulp, babelConfig) => {
     gulp.task(config.prefix + 'build:clean', () => {
