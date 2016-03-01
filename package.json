@@ -93,7 +93,7 @@
     "fancy-log": "^1.2.0",
     "globby": "^4.0.0",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2",
+    "gulp-babel2": "^6.1.2",
     "gulp-mocha": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sourcemaps": "^1.6.0",
