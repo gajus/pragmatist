@@ -42,7 +42,7 @@
     "fancy-log",
     "globby",
     "gulp",
-    "gulp-babel",
+    "gulp-babel2",
     "gulp-mocha",
     "gulp-plumber",
     "gulp-sourcemaps",
