@@ -141,5 +141,5 @@
     "lint": "canonical lint ./src/",
     "watch-build": "npm run build; babel --presets es2015,stage-0 --watch ./src --out-dir ./dist --source-maps"
   },
-  "version": "3.0.17"
+  "version": "3.0.18"
 }
