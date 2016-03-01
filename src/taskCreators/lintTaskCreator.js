@@ -13,11 +13,8 @@ export default (config, gulp) => {
             './src/**/*.scss'
         ])
             .then((paths) => {
-                let formatter,
-                    report;
-
-                formatter = getFormatter();
-                report = lintFiles(paths);
+                const formatter = getFormatter();
+                const report = lintFiles(paths);
 
                 /* eslint-disable no-console */
                 console.log(formatter(report));
