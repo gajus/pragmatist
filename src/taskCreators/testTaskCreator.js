@@ -1,10 +1,12 @@
-import babel from 'gulp-babel';
+import babelCreator from 'gulp-babel2';
 import del from 'del';
 import sourcemaps from 'gulp-sourcemaps';
 import mocha from 'gulp-mocha';
 import {
     runSequence
 } from './../utilities';
+
+const babel = babelCreator();
 
 export default (config, gulp, babelConfig) => {
     gulp.task(config.prefix + 'test:pre-copy-clean', () => {
