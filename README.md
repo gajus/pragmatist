@@ -128,14 +128,12 @@ A typical project using `pragmatist` will define the following NPM scripts:
 
 ```json
 "scripts": {
-   "pragmatist": "pragmatist",
-   "lint": "npm run pragmatist lint",
-   "test": "npm run pragmatist test",
-   "build": "npm run pragmatist build",
-   "watch": "npm run pragmatist watch",
-   "watch-lint": "npm run pragmatist watch-lint",
-   "watch-test": "npm run pragmatist watch-test",
-   "watch-build": "npm run pragmatist watch-build"
+   "lint": "pragmatist lint",
+   "watch-lint": "pragmatist watch-lint",
+   "test": "pragmatist --type-assertions test",
+   "watch-test": "pragmatist --type-assertions test",
+   "build": "pragmatist --es5 build",
+   "watch-build": "pragmatist --es5 watch-build"
 },
 ```
 
