@@ -1,3 +1,13 @@
+# Deprecated
+
+This project is no longer actively maintained.
+
+I thought Pragmatist is going to save me a lot of time – a single build program for all of my open-source projects. The primary goals were to (1) standardize build tools (unit testing, linting, code coverage), (2) reduce the configuration boilerplate and to (3) enable simple updates of these changes across all projects.
+
+However, as the list of projects grew that depend on Pragmatist, so did the list of the dependencies and configurations that come with it. It got to the point where installing Pragmatist alone is taking more than 10 minutes. Furthermore, bundling together unit testing, linting JavaScript, linting CSS and other linters made this package increasingly susceptible to breaking changes. If proper semantic versioning were to have been followed, this package now would have a major version somewhere in hundreds. However, failing to follow semver resulted in CI failing simultaneously across all the projects that depend on Pragmatist on each new release. In the end, this required that after each update to Pragmatist all depending projects needed to be inspected and updated accordingly.
+
+I have gone back to using the respective build tools and maintaining the respective configurations (or shareable configurations, e.g. [eslint-config-canonical](https://github.com/gajus/eslint-config-canonical)) for each project.
+
 # Pragmatist
 
 [![NPM version](http://img.shields.io/npm/v/pragmatist.svg?style=flat-square)](https://www.npmjs.com/package/pragmatist)
